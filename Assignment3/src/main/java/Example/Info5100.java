@@ -82,6 +82,6 @@ public class Info5100 {
 ;
 
         //访问employment history
-        student.getEmploymenthistory();
+        student.getEmploymenthistory(); 
     }
 }
