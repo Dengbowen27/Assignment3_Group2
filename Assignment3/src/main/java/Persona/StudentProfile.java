@@ -46,4 +46,31 @@ public class StudentProfile {
         
         return transcript.newCourseLoad(s);
     }
+    
+    //get gpa
+    public float getCurrentGpa(){
+        return transcript.getCurrentGpa();
+    }
+
+    public Transcript getTranscript() {
+        return transcript;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public EmploymentHistory getEmploymenthistory() {
+        return employmenthistory;
+    }
+
+    public void setEmploymenthistory(EmploymentHistory employmenthistory) {
+        this.employmenthistory = employmenthistory;
+    }
+    
+    
 }

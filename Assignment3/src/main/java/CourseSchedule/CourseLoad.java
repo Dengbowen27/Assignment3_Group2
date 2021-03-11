@@ -35,14 +35,17 @@ public class CourseLoad {
         seatassignments.add(sa);
     }
 
-    public float getSemesterScore() {
-        float sum = 0;
-        float credit = 0;
-        for(SeatAssignment sa:seatassignments){
-            sum = sum + sa.getCourseStudentScore();
-            credit = credit + sa.getCreditHours();
-        }
-        return sum/credit;
+//    public float getSemesterScore() {
+//        float sum = 0;
+//        float credit = 0;
+//        for(SeatAssignment sa:seatassignments){
+//            sum = sum + sa.getCourseStudentScore();
+//            credit = credit + sa.getCreditHours();
+//        }
+//        return sum/credit;
+//    }
+    public ArrayList<SeatAssignment> getSeatAssignments(){
+        return seatassignments;
     }
     
 }

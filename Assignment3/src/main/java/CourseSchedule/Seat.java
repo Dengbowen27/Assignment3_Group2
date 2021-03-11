@@ -28,6 +28,7 @@ public class Seat {
     public SeatAssignment newSeatAssignment(){
         
         seatassignment = new SeatAssignment(); //links seatassignment to seat
+        seatassignment.setSeat(this);
         occupied = true;   
         return seatassignment;
     }

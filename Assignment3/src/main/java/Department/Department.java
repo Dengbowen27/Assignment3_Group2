@@ -83,12 +83,12 @@ public class Department {
 
     }
     
-    public float calculateGpaBySemester(String semester){
-        
-        CourseLoad cl = mastercourseload.get(semester);
-        
-        return cl.getSemesterScore();
-    }
+//    public float calculateGpaBySemester(String semester){
+//        
+//        CourseLoad cl = mastercourseload.get(semester);
+//        
+//        return cl.getSemesterScore();
+//    }
 
     public void RegisterForAClass(String studentid, String cn, String semester) {
 

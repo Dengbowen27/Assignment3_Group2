@@ -6,6 +6,7 @@
 package Persona;
 
 import CourseSchedule.CourseLoad;
+import CourseSchedule.SeatAssignment;
 import java.util.HashMap;
 
 /**
@@ -16,8 +17,11 @@ public class Transcript {
     HashMap<String, CourseLoad> courseloadlist;
     StudentProfile student;
     CourseLoad currentcourseload;
-    
 
+    public HashMap<String, CourseLoad> getCourseloadlist() {
+        return courseloadlist;
+    }
+    
     
     public Transcript(/*StudentProfile sp*/){
         //student = sp;
@@ -42,15 +46,29 @@ public class Transcript {
         return courseloadlist.get(semester);
         
     }
-    public float getStudentTotalScore(){
-        float sum = 0;
-        int n = 0;
-        for(CourseLoad cl : courseloadlist.values()){
-            sum = sum + cl.getSemesterScore();
-            
-        }
-        return sum;
-    }
+//    public float getStudentTotalScore(){
+//        float sum = 0;
+//        int n = 0;
+//        for(CourseLoad cl : courseloadlist.values()){
+//            sum = sum + cl.getSemesterScore();
+//            
+//        }
+//        return sum;
+//    }
 
+    public float getCurrentGpa() {
+        float sum = 0.0f;
+        float credits = 0.0f;
+        for (CourseLoad cl : courseloadlist.values()) {
+            for (SeatAssignment sa : cl.getSeatAssignments()) {
+                sum += sa.getCourseStudentScore();
+                credits += sa.getCreditHours();
+            }
+        }
+       return sum/credits;
+       
     }
+    
+
+}
 
