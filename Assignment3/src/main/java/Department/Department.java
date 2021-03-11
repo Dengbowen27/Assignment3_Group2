@@ -26,6 +26,7 @@ public class Department {
     PersonDirectory persondirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultydirectory;
+    Degree degree;
     //EmployerDirectory employerdirectory;
 
     HashMap<String, CourseSchedule> mastercoursecatalog;

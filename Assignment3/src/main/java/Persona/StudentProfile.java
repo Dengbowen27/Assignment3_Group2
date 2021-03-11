@@ -55,7 +55,7 @@ public class StudentProfile {
     public Transcript getTranscript() {
         return transcript;
     }
-
+    
     public Person getPerson() {
         return person;
     }

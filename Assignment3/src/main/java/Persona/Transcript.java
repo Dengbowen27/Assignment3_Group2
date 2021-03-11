@@ -55,7 +55,16 @@ public class Transcript {
 //        }
 //        return sum;
 //    }
-
+    public int getTotalCreitHour(){
+        int credit=0;
+        for (CourseLoad cl : courseloadlist.values()) {
+            for (SeatAssignment sa : cl.getSeatAssignments()) {
+                credit += sa.getCreditHours();
+            }
+        }
+        return credit;
+    }
+    
     public float getCurrentGpa() {
         float sum = 0.0f;
         float credits = 0.0f;
