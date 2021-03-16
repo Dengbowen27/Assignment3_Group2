@@ -23,8 +23,8 @@ public class Transcript {
     }
     
     
-    public Transcript(/*StudentProfile sp*/){
-        //student = sp;
+    public Transcript(StudentProfile sp){
+        student = sp;
         courseloadlist = new HashMap<String, CourseLoad>();
         
     }
