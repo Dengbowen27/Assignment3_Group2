@@ -21,7 +21,7 @@ public class StudentProfile {
     public StudentProfile(Person p) {
 
         person = p;
-        transcript = new Transcript(this);
+        transcript = new Transcript();
         employmenthistory = new EmploymentHistory();
     }
 
