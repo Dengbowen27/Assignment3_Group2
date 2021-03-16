@@ -37,4 +37,15 @@ public class EmploymentHistory {
         }
         return sum/i;
     }
+    
+    public boolean isPromotion(){
+//        for (int i = 0; i < arr.length; i++) {
+//            for (int j = 0; j < arr.length; j++) {
+//                Object object = arr[j];
+//                return true;
+//            }
+//            
+//        }
+        return true;
+    }
 }

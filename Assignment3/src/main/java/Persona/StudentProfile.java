@@ -81,10 +81,19 @@ public class StudentProfile implements Comparable<StudentProfile>{
     //sort by rank
     @Override
     public int compareTo(StudentProfile o) {
-        int thisrank = this.employmenthistory.getEmploymentGrade();
-        int otherrank = o.employmenthistory.getEmploymentGrade();
-        return otherrank-thisrank;
+        int level1 = o.employmenthistory.getEmploymentGrade() - this.employmenthistory.getEmploymentGrade();
+//        
+        if(level1!=0) //先按照rank排序
+        {
+            return level1;
+        }else //再根据学号大小排序
+        {
+            return (Integer.parseInt(o.person.id) - Integer.parseInt(this.person.id)) * -1;
+        }
+//      return level1;
+
     }
+    
     
     
     
