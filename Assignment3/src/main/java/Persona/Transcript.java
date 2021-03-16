@@ -77,7 +77,19 @@ public class Transcript {
        return sum/credits;
        
     }
-    
 
+    @Override
+    public String toString() {
+        String res = "";
+        for (CourseLoad cl : courseloadlist.values()) {
+            for (SeatAssignment sa : cl.getSeatAssignments()) {
+                res+= "Course:{"+sa.getSeat().getCourseoffer().getCourse().getNumber() + "}, grade:{"+ sa.getGrade()+"}\n";
+            }
+        }
+        
+        return res;
+    }
+    
+    
 }
 

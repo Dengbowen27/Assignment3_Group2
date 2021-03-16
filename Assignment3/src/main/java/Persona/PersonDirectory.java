@@ -20,9 +20,9 @@ public class PersonDirectory {
 
     }
 
-    public Person newPerson(String id) {
+    public Person newPerson(String id,String name) {
 
-        Person p = new Person(id);
+        Person p = new Person(id,name);
         personlist.add(p);
         return p;
     }

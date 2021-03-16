@@ -10,17 +10,28 @@ package Persona;
  * @author Dengbowen
  */
 public class Person {
+    String name;
     String id;
-    public Person (String id){
-        
+    public Person (String id,String name){
+        this.name = name;
         this.id = id;
     }
     public String getPersonId(){
         return id;
     }
 
-        public boolean isMatch(String id){
-        if(getPersonId().equals(id)) return true;
+    public boolean isMatch(String id) {
+        if (getPersonId().equals(id)) {
+            return true;
+        }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" + "name=" + name + ", id=" + id + '}';
+    }
+    
+    
+    
 }

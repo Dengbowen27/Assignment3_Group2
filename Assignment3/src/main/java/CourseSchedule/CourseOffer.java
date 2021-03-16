@@ -97,6 +97,11 @@ public class CourseOffer {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    @Override
+    public String toString() {
+        return "CourseOffer{" + "course=" + course.getName() + ", seats=" + seatlist.size() + '}';
+    }
     
     
 

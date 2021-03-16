@@ -12,7 +12,7 @@ package CourseSchedule;
 public class SeatAssignment {
     Seat seat;
     CourseLoad courseload;
-    float grade;
+    double grade;
 
     public Seat getSeat() {
         return seat;
@@ -36,15 +36,15 @@ public class SeatAssignment {
     public int getCreditHours(){
         return seat.getCourseCredits();
     }
-    public float getCourseStudentScore(){
+    public double getCourseStudentScore(){
         return getCreditHours()*grade;
     }
     
-    public void setGrade(float grade){
+    public void setGrade(double grade){
         this.grade = grade;
     }
 
-    public float getGrade() {
+    public double getGrade() {
         return grade;
     }
     

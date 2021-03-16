@@ -31,6 +31,7 @@ public class Employment {
         this.weight = weight;
         this.quality = quality;
         this.employer = employer;
+        this.employer.addEmpoyment(this);
         //ArrayList relevantcourseoffers = new ArrayList();
         
     }
@@ -62,5 +63,11 @@ public class Employment {
     public void setEmployer(EmployerProfile employer) {
         this.employer = employer;
     }
+
+    public String getJob() {
+        return job;
+    }
+    
+    
     
 }

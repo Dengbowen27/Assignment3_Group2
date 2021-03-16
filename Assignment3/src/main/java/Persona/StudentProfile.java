@@ -12,7 +12,7 @@ import Persona.EmploymentHistory.EmploymentHistory;
  *
  * @author Dengbowen
  */
-public class StudentProfile {
+public class StudentProfile implements Comparable<StudentProfile>{
     Person person;
     Transcript transcript;
     EmploymentHistory employmenthistory;
@@ -71,6 +71,22 @@ public class StudentProfile {
     public void setEmploymenthistory(EmploymentHistory employmenthistory) {
         this.employmenthistory = employmenthistory;
     }
+
+    @Override
+    public String toString() {
+        return person.toString();
+    }
+
+    
+    //sort by rank
+    @Override
+    public int compareTo(StudentProfile o) {
+        int thisrank = this.employmenthistory.getEmploymentGrade();
+        int otherrank = o.employmenthistory.getEmploymentGrade();
+        return otherrank-thisrank;
+    }
+    
+    
     
     
 }

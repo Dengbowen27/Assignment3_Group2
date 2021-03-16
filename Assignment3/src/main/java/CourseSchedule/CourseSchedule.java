@@ -56,4 +56,18 @@ public class CourseSchedule {
         return sum;
     }
 
+    @Override
+    public String toString() {
+        return semester+":\n"+printCourseoffers();
+    }
+    
+    public String printCourseoffers(){
+        String str = "";
+        for (int i = 0; i < schedule.size(); i++) {
+           str += schedule.get(i).toString()+"\n";
+        }
+        return str;
+    }
+
+    
 }

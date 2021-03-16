@@ -8,6 +8,7 @@ package Employer;
 import Persona.Faculty.*;
 import Persona.*;
 import Department.Department;
+import Faker.FakerUtl;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +41,12 @@ public class EmployerDirectory {
                 return ep;
             }
         }
-            return null; //not found after going through the whole list
-         }
+        return null; //not found after going through the whole list
+    }
+    
+    //get one random employer (for ingest data)
+    public EmployerProfile getOneEmployerProfile(){
+        int lenght = employerlist.size()-1;
+        return employerlist.get(FakerUtl.randomIntNum(0, lenght));
+    }
 }

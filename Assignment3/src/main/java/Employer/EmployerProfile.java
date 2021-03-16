@@ -22,7 +22,7 @@ public class EmployerProfile {
         name = n;
         weight = w;
         quality = q;
-        
+        employments = new ArrayList<>();
     }
     public boolean isMatch(String id){
         if(name.equals(id)) return true;             //String is an object and can do equal matach
@@ -43,6 +43,21 @@ public class EmployerProfile {
 
     public void setQuality(int quality) {
         this.quality = quality;
+    }
+    
+    public void addEmpoyment(Employment e){
+        employments.add(e);
+    }
+
+    public ArrayList<Employment> getEmployments() {
+        return employments;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "EmployerProfile{" + "name=" + name + ", weight=" + weight + ", quality=" + quality + ", employments=" + employments + '}';
     }
     
 }

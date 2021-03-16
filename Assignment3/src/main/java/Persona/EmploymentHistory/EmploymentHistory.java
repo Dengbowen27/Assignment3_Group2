@@ -19,12 +19,10 @@ public class EmploymentHistory {
         employments = new ArrayList();
     }
     
-    public Employment newEmployment(String job,int weight,int quality,EmployerProfile employer){
-        
-        Employment ne = new Employment(job,weight,quality,employer);
-        employments.add(ne);
-        return ne;
+    public void newEmployment(Employment e){
+        employments.add(e);
     }
+    
     public int getEmploymentGrade(){
         int sum = 0;
         int i = 0;
@@ -32,6 +30,10 @@ public class EmploymentHistory {
             EmployerProfile employer = e.getEmployer();
             sum = sum + employer.getQuality()*employer.getWeight()+e.getQuality()*e.getWeight();
             i++;
+        }
+        if(i==0)
+        {
+            return 0;
         }
         return sum/i;
     }
