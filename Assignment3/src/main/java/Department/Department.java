@@ -10,6 +10,7 @@ import CourseCatalog.CourseCatalog;
 import CourseSchedule.CourseLoad;
 import CourseSchedule.CourseOffer;
 import CourseSchedule.CourseSchedule;
+import Employer.EmployerDirectory;
 import Persona.PersonDirectory;
 import Persona.StudentDirectory;
 import Persona.StudentProfile;
@@ -26,6 +27,7 @@ public class Department {
     PersonDirectory persondirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultydirectory;
+    EmployerDirectory employerDirectory;
     Degree degree;
     //EmployerDirectory employerdirectory;
 
@@ -39,6 +41,7 @@ public class Department {
         coursecatalog = new CourseCatalog(this);
         studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
         persondirectory = new PersonDirectory();
+        employerDirectory=new EmployerDirectory(this);
     }
 
     public PersonDirectory getPersonDirectory() {
@@ -84,15 +87,17 @@ public class Department {
 
     }
     
-//    public float calculateGpaBySemester(String semester){
-//        
-//        CourseLoad cl = mastercourseload.get(semester);
-//        
-//        return cl.getSemesterScore();
-//    }
+    public EmployerDirectory getEmployerDirectory() {
+
+        return employerDirectory;
+
+    }
+
+    public void setEmployerDirectory(EmployerDirectory employerDirectory) {
+        this.employerDirectory = employerDirectory;
+    }
 
     public void RegisterForAClass(String studentid, String cn, String semester) {
-
         StudentProfile sp = studentdirectory.findStudent(studentid);
 
         CourseLoad cl = sp.getCurrentCourseLoad();
@@ -102,6 +107,5 @@ public class Department {
         CourseOffer co = cs.getCourseOfferByNumber(cn);
 
         co.assignEmptySeat(cl);
-
     }
 }

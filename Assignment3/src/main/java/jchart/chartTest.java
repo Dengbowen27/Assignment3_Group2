@@ -34,7 +34,6 @@ public class chartTest {
             gpas.add(gpa);
         }
         gpas.add(4.0f);
-      
       LineChart_AWT chart = new LineChart_AWT(
       "Gpa Vs Rank" ,
       "Gpas vs Ranks",

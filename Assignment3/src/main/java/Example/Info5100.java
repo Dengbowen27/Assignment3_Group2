@@ -11,6 +11,10 @@ import CourseSchedule.CourseOffer;
 import CourseSchedule.CourseSchedule;
 import CourseSchedule.SeatAssignment;
 import Department.Department;
+import Employer.EmployerDirectory;
+import Employer.EmployerProfile;
+import Persona.EmploymentHistory.Employment;
+import Persona.EmploymentHistory.EmploymentHistory;
 import Persona.Person;
 import Persona.PersonDirectory;
 import Persona.StudentDirectory;
@@ -27,8 +31,9 @@ import java.util.Map;
 public class Info5100 {
     
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         Department department = new Department("Information Systems");
+        // first course
         Course course = department.newCourse("app eng", "info 5100", 4);
         CourseSchedule courseschedule = department.newCourseSchedule("Fall2020");
         CourseOffer courseoffer = courseschedule.newCourseOffer("info 5100");
@@ -39,7 +44,7 @@ public class Info5100 {
         StudentDirectory sd = department.getStudentDirectory();
         StudentProfile student = sd.newStudentProfile(person);
         CourseLoad courseload = student.newCourseLoad("Fall2020"); 
-        //
+        //second course
         Course course2 = department.newCourse("spring eng", "info 5200", 2);
         CourseSchedule courseschedule2 = department.newCourseSchedule("spring2020");
         CourseOffer courseoffer2 = courseschedule.newCourseOffer("info 5200");
@@ -54,8 +59,8 @@ public class Info5100 {
         SeatAssignment sa = courseload.newSeatAssignment(courseoffer); //register student in class
         sa.setGrade(3.7f);
         
-//        int total = department.calculateRevenuesBySemester("Fall2020");
-//        System.out.print("Total: " + total);
+        int total = department.calculateRevenuesBySemester("Fall2020");
+        System.out.print("Total: " + total);
         
         HashMap<String, CourseLoad> courseloadlist = student.getTranscript().getCourseloadlist();
         
@@ -69,8 +74,6 @@ public class Info5100 {
                System.out.println("null");
            }
            for(SeatAssignment saa : cs.getSeatAssignments()){
-//               System.out.println(saa.getCreditHours());
-//               System.out.println(saa.getSeat().getCourseoffer().getSubjectCourse().getName() +": "+saa.getGrade());
                String result = String.format("课程:(%s)   学时(%d)  成绩(%f)",saa.getSeat().getCourseoffer().getSubjectCourse().getName(),saa.getSeat().getCourseoffer().getCreditHours(),saa.getGrade());
                System.out.println(result); //sa.getSeat().getCourseoffer().getCreditHours()
            }
@@ -78,10 +81,16 @@ public class Info5100 {
        
         System.out.println("-----GPA");
         System.out.println(student.getCurrentGpa());
-//        for( student.getTranscript().getCourseloadlist())
 ;
+        //create Employer here
+        EmployerDirectory employerDirectory=department.getEmployerDirectory();
+        EmployerProfile employerProfile;
+        employerProfile=employerDirectory.newEmployerProfile("Microsoft", 9, 8);
+        //visit employment history
+        Employment employment;
+        
+        EmploymentHistory employmentHistory1=student.getEmploymenthistory();
+//        employment=employmentHistory1.newEmployment("JuniorSoftwareDevelopmentEngineer", total, total, employerProfile);
 
-        //访问employment history
-        student.getEmploymenthistory(); 
     }
 }
