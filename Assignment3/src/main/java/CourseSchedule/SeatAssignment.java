@@ -5,6 +5,8 @@
  */
 package CourseSchedule;
 
+import CourseCatalog.Course;
+
 /**
  *
  * @author Dengbowen
@@ -47,5 +49,7 @@ public class SeatAssignment {
     public double getGrade() {
         return grade;
     }
-    
+    public Course getCourse(){
+        return seat.getCourse();
+    }
 }

@@ -7,6 +7,7 @@ package Persona.EmploymentHistory;
 
 import Employer.EmployerProfile;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -22,13 +23,18 @@ public class EmploymentHistory {
     public void newEmployment(Employment e){
         employments.add(e);
     }
+
+    public ArrayList<Employment> getEmployments() {
+        return employments;
+    }
+    
     
     public int getEmploymentGrade(){
         int sum = 0;
         int i = 0;
         for(Employment e:employments){
             EmployerProfile employer = e.getEmployer();
-            sum = sum + employer.getQuality()*employer.getWeight()+e.getQuality()*e.getWeight();
+            sum =sum + employer.getQuality()*employer.getWeight()+e.getQuality()*e.getWeight();
             i++;
         }
         if(i==0)
@@ -39,13 +45,15 @@ public class EmploymentHistory {
     }
     
     public boolean isPromotion(){
-//        for (int i = 0; i < arr.length; i++) {
-//            for (int j = 0; j < arr.length; j++) {
-//                Object object = arr[j];
-//                return true;
-//            }
-//            
-//        }
-        return true;
+       // for (Employment e:employments) {
+             int i = employments.size()-1;
+             int grade[]=new int[i];
+             String em[]=new String[i];
+             for(int j=0;j<i;j++){
+                grade[j]=employments.get(j).getEmploymentGrade();
+                em[j]=employments.get(j).getEmployerName();
+             }            
+            return true; 
     }
+    
 }

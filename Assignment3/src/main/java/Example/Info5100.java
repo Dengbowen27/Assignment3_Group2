@@ -70,7 +70,7 @@ public class Info5100 {
        // generate 100 students
         PersonDirectory pd = department.getPersonDirectory();
         StudentDirectory sd = department.getStudentDirectory();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
              Person person = pd.newPerson("00"+(15800+i),FakerUtl.name());
             StudentProfile student = sd.newStudentProfile(person);
             System.out.println(student);
@@ -109,12 +109,27 @@ public class Info5100 {
         
         //create companies
         EmployerDirectory employerDirectory=department.getEmployerDirectory();
-        for (int i = 0; i < 10; i++) { //create n companies
-            EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(1, 5), FakerUtl.randomIntNum(1, 5));  //name , weight, quality
+        for (int i = 0; i < 3; i++) { //create n companies
+            EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(1, 10), FakerUtl.randomIntNum(1, 10
+            ));  //name , weight, quality
             System.out.println(emp);
             for (int j = 0; j < 3; j++) { //create n jobs for each company
-                Employment e = new Employment(FakerUtl.job(),j+1,j+1,emp); //string job,int weight,int quality,EmployerProfile employer
+                Employment e = new Employment(FakerUtl.job(),FakerUtl.randomIntNum(1, 10),FakerUtl.randomIntNum(1, 10),emp);
+                //string job,int weight,int quality,EmployerProfile employer
+        //creat relevant courses
+                for(int k = 0;k<2;k++){
+                    int cdx = FakerUtl.randomIntNum(0, 15);
+                    Course c = department.getCourseCatalog().getCourseByNumber(courses[0][cdx]);
+                    e.newRelevantCourse(c);}
+                //e.newRelevantCourse(department.getCourseCatalog().getCourseByNumber("INFO-5100"));
+                
+               // for(Course c : e.getRelevantcourses()){
+               //     System.out.println(c.getName());
+               // }
+
                 System.out.println(e.getJob());
+                System.out.println(e.getEmployerName());
+       
             }
             
         }
@@ -123,11 +138,19 @@ public class Info5100 {
         for (StudentProfile stu : sd.getStudentlist()) {
             EmploymentHistory employmenthistory = stu.getEmploymenthistory();
             EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
-            int randomIntNum = FakerUtl.randomIntNum(0,oneEmployerProfile.getEmployments().size()-1);
+            int randomIntNum = FakerUtl.randomIntNum(0,3);
             for (int i = 0; i < randomIntNum; i++) {//随机插入0-3份工作
                 employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
             }
+            //for(Employment e : employmenthistory.getEmployments()){
+          //  System.out.println(e.getJob());
+            
+           // }
+            System.out.println(stu.getPerson().getId());  
             System.out.println(employmenthistory.getEmploymentGrade());
+            for(Employment e : employmenthistory.getEmployments()){
+                System.out.println(e.getJob());
+            }
         }
                 
         System.out.println("student sorts by rank.. Enter");
@@ -141,6 +164,25 @@ public class Info5100 {
          for (StudentProfile stu : sd.getStudentlist()) {
              System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
          }
+         
+ //relevant course numbers
+        for(StudentProfile stu : sd.getStudentlist()){
+            int num = 0;
+            for(CourseLoad c:stu.getTranscript().getCourseloadlist().values())
+                for(SeatAssignment sa:c.getSeatAssignments())
+                    for(Employment e : stu.getEmploymenthistory().getEmployments())
+                       for(Course f :e.getRelevantcourses())
+                           if(f==sa.getCourse()){
+                           num = num+1;
+                           }
+            System.out.println(num);
+        }
+
+//promotion
+        //for(StudentProfile stu : sd.getStudentlist()){
+        //    for(Employment e : stu.getEmploymenthistory().getEmployments())
+                
+        //}
          
          
 

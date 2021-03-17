@@ -46,6 +46,9 @@ public class Transcript {
         return courseloadlist.get(semester);
         
     }
+    public void getAllCourse(){
+      
+    }
 //    public float getStudentTotalScore(){
 //        float sum = 0;
 //        int n = 0;

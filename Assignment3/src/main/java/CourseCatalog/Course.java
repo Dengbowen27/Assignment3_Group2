@@ -21,6 +21,11 @@ public class Course {
         
         
     }
+    public Course(String n){
+     name = n;
+        
+        
+    }
     public String getCOurseNumber(){
         return number;
     }

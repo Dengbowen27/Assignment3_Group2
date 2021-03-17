@@ -5,6 +5,8 @@
  */
 package CourseSchedule;
 
+import CourseCatalog.Course;
+
 /**
  *
  * @author Dengbowen
@@ -39,6 +41,9 @@ public class Seat {
     
     public int getCourseCredits(){
         return courseoffer.getCreditHours();
+    }
+    public Course getCourse(){
+        return courseoffer.getCourse();
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package Employer;
 
+import Faker.FakerUtl;
 import Persona.EmploymentHistory.Employment;
 import java.util.ArrayList;
 
@@ -29,6 +30,11 @@ public class EmployerProfile {
         return false;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    
     public int getWeight() {
         return weight;
     }
@@ -51,6 +57,10 @@ public class EmployerProfile {
 
     public ArrayList<Employment> getEmployments() {
         return employments;
+    }
+    public Employment getOneEmployment(){
+        int lenght = employments.size()-1;
+        return employments.get(FakerUtl.randomIntNum(0, lenght));
     }
     
     

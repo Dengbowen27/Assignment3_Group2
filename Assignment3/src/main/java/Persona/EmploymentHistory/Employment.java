@@ -6,6 +6,7 @@
 package Persona.EmploymentHistory;
 
 import CourseCatalog.Course;
+import CourseCatalog.CourseCatalog;
 import java.util.ArrayList;
 import CourseSchedule.CourseOffer;
 import Employer.EmployerProfile;
@@ -15,13 +16,13 @@ import Employer.EmployerProfile;
  */
 public class Employment {
 
-    ArrayList<CourseOffer> relevantcourseoffers;
+    ArrayList<Course> relevantcourses;
     
     int weight;
     int quality;
     String job;
 
-    
+    CourseCatalog coursecatalog;
     Employment nextemplyment;  //next job so they are in a sequence 
     
     EmployerProfile employer;
@@ -33,8 +34,8 @@ public class Employment {
         this.quality = quality;
         this.employer = employer;
         this.employer.addEmpoyment(this);
-        //ArrayList relevantcourseoffers = new ArrayList();
-        ArrayList relevantcourseoffers = new ArrayList();
+        ArrayList relevantcourses = new ArrayList();
+        this.relevantcourses = relevantcourses;
         
     }
     public Employment(){
@@ -69,13 +70,22 @@ public class Employment {
     public String getJob() {
         return job;
     }
+    public String getEmployerName(){
+       return employer.getName();
+    }
     
-    
-    public CourseOffer newRelevantCourseoffer(Course c){
-        CourseOffer newcourseoffer = new CourseOffer(c);
-        relevantcourseoffers.add(newcourseoffer);
-        return newcourseoffer;
+    public Course newRelevantCourse(Course c){
+        relevantcourses.add(c);
+        return c;
         
     }
+
+    public ArrayList<Course> getRelevantcourses() {
+        return relevantcourses;
+    }
+    public int getEmploymentGrade(){
+       return weight*quality;
+    }
+    
     
 }
