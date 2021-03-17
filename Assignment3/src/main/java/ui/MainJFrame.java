@@ -7,6 +7,9 @@ package ui;
 
 import Department.Department;
 import Persona.StudentDirectory;
+import java.awt.CardLayout;
+import java.awt.Container;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,8 +20,9 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    Department department=new Department("info 5100");
+    Department department=new Department("InformationSystems");
     StudentDirectory studentDirectory;
+    CardLayout card;
     public MainJFrame() {
         studentDirectory=department.getStudentDirectory();
         initComponents();
@@ -73,22 +77,13 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(contrlareaLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(btnStudentsProfile)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
 
         SplitPane.setLeftComponent(contrlarea);
 
-        javax.swing.GroupLayout workareaLayout = new javax.swing.GroupLayout(workarea);
-        workarea.setLayout(workareaLayout);
-        workareaLayout.setHorizontalGroup(
-            workareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
-        );
-        workareaLayout.setVerticalGroup(
-            workareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 428, Short.MAX_VALUE)
-        );
-
+        workarea.setMinimumSize(new java.awt.Dimension(800, 400));
+        workarea.setLayout(new java.awt.CardLayout());
         SplitPane.setRightComponent(workarea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -106,8 +101,12 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStudentsProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentsProfileActionPerformed
-        StudentsJPanel studentsJPanel=new StudentsJPanel(studentDirectory);
-        SplitPane.setRightComponent(studentsJPanel);
+
+        StudentsJPanel studentsJPanel=new StudentsJPanel(studentDirectory,workarea);
+        workarea.add("StudentsJPanel",studentsJPanel);
+        CardLayout layout = (CardLayout)workarea.getLayout();
+        layout.next(workarea);
+        
     }//GEN-LAST:event_btnStudentsProfileActionPerformed
 
     /**

@@ -5,6 +5,9 @@
  */
 package ui;
 
+import Persona.StudentDirectory;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Dengbowen
@@ -14,7 +17,11 @@ public class AcademicJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AcedamicJPanel
      */
-    public AcademicJPanel() {
+    StudentDirectory studentDirectory;
+    JPanel workarea;
+    public AcademicJPanel(StudentDirectory studentDirectory,JPanel workarea) {
+        this.workarea=workarea;
+        this.studentDirectory=studentDirectory;
         initComponents();
     }
 
