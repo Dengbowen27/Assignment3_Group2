@@ -5,6 +5,9 @@
  */
 package ui;
 
+import Department.Department;
+import Persona.StudentDirectory;
+
 /**
  *
  * @author Dengbowen
@@ -14,7 +17,10 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
+    Department department=new Department("info 5100");
+    StudentDirectory studentDirectory;
     public MainJFrame() {
+        studentDirectory=department.getStudentDirectory();
         initComponents();
     }
 
@@ -30,9 +36,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         SplitPane = new javax.swing.JSplitPane();
         contrlarea = new javax.swing.JPanel();
-        btnJob = new javax.swing.JButton();
-        btnAcademic = new javax.swing.JButton();
-        btnView = new javax.swing.JButton();
+        btnStudentsProfile = new javax.swing.JButton();
         workarea = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -48,24 +52,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnJob.setText("Job");
-        btnJob.addActionListener(new java.awt.event.ActionListener() {
+        btnStudentsProfile.setText("Students");
+        btnStudentsProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnJobActionPerformed(evt);
-            }
-        });
-
-        btnAcademic.setText("Academic");
-        btnAcademic.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcademicActionPerformed(evt);
-            }
-        });
-
-        btnView.setText("View");
-        btnView.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                btnStudentsProfileActionPerformed(evt);
             }
         });
 
@@ -75,27 +65,15 @@ public class MainJFrame extends javax.swing.JFrame {
             contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contrlareaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAcademic)
-                    .addGroup(contrlareaLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(btnView))
-                    .addComponent(btnJob))
+                .addComponent(btnStudentsProfile)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        contrlareaLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAcademic, btnJob});
-
         contrlareaLayout.setVerticalGroup(
             contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contrlareaLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(btnJob)
-                .addGap(46, 46, 46)
-                .addComponent(btnAcademic)
-                .addGap(45, 45, 45)
-                .addComponent(btnView)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(122, 122, 122)
+                .addComponent(btnStudentsProfile)
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         SplitPane.setLeftComponent(contrlarea);
@@ -104,11 +82,11 @@ public class MainJFrame extends javax.swing.JFrame {
         workarea.setLayout(workareaLayout);
         workareaLayout.setHorizontalGroup(
             workareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 574, Short.MAX_VALUE)
         );
         workareaLayout.setVerticalGroup(
             workareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 428, Short.MAX_VALUE)
         );
 
         SplitPane.setRightComponent(workarea);
@@ -117,30 +95,20 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(SplitPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(SplitPane)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJobActionPerformed
-        JobJPanel jobPanel=new JobJPanel();
-        SplitPane.setRightComponent(jobPanel);// TODO add your handling code here:
-    }//GEN-LAST:event_btnJobActionPerformed
-
-    private void btnAcademicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcademicActionPerformed
-        AcademicJPanel academicPanel=new AcademicJPanel();
-        SplitPane.setRightComponent(academicPanel);
-    }//GEN-LAST:event_btnAcademicActionPerformed
-
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        ViewJPanel viewPanel = new ViewJPanel();
-        SplitPane.setRightComponent(viewPanel);// TODO add your handling code here:
-    }//GEN-LAST:event_btnViewActionPerformed
+    private void btnStudentsProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentsProfileActionPerformed
+        StudentsJPanel studentsJPanel=new StudentsJPanel(studentDirectory);
+        SplitPane.setRightComponent(studentsJPanel);
+    }//GEN-LAST:event_btnStudentsProfileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,9 +147,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSplitPane SplitPane;
-    private javax.swing.JButton btnAcademic;
-    private javax.swing.JButton btnJob;
-    private javax.swing.JButton btnView;
+    private javax.swing.JButton btnStudentsProfile;
     private javax.swing.JPanel contrlarea;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel workarea;

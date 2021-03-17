@@ -74,7 +74,7 @@ public class StudentProfile implements Comparable<StudentProfile>{
 
     @Override
     public String toString() {
-        return person.toString();
+        return person.id;
     }
 
     
