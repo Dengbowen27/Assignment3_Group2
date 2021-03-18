@@ -5,9 +5,11 @@
  */
 package Persona.EmploymentHistory;
 
+import CourseCatalog.Course;
 import Employer.EmployerProfile;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  *
@@ -57,5 +59,29 @@ public class EmploymentHistory {
         
           
     }
+   
+   //get relevant courses without repeat
+    public HashSet<Course> getRelevantCourses(){
+        HashSet<Course> rc = new HashSet<>();
+        for (Employment e : employments) {
+            for (Course f : e.getRelevantcourses()) {
+                rc.add(f);
+            }
+        }
+        return rc;
+    }
     
+    //get the number of same courses appeared both in employment and transcript
+    public int getSameCoursesNum(ArrayList<Course> transarr){
+        int num = 0;
+        HashSet<Course> rc = this.getRelevantCourses();
+        if(rc.isEmpty()){
+            return 0;
+        }
+        for(Course c:transarr){
+            if(rc.contains(c))
+               num+=1; 
+        }
+        return num;
+    }
 }

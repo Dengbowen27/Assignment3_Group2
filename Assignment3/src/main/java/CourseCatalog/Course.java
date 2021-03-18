@@ -45,7 +45,10 @@ public class Course {
     public String getNumber() {
         return number;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Course{" + "number=" + number + ", name=" + name + '}';
+    }
     
 }

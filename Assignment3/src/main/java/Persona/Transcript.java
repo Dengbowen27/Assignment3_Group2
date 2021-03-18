@@ -5,8 +5,10 @@
  */
 package Persona;
 
+import CourseCatalog.Course;
 import CourseSchedule.CourseLoad;
 import CourseSchedule.SeatAssignment;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -79,6 +81,17 @@ public class Transcript {
         }
        return sum/credits;
        
+    }
+    
+    //getCourses
+    public ArrayList<Course> getCourses(){
+       ArrayList<Course> cs = new ArrayList<>();
+       for (CourseLoad cl : courseloadlist.values()) {
+            for (SeatAssignment sa : cl.getSeatAssignments()) {
+                cs.add(sa.getCourse());
+            }
+        }
+       return cs;
     }
 
     @Override
