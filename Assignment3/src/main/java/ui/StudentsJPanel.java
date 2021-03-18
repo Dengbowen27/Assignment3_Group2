@@ -5,6 +5,7 @@
  */
 package ui;
 
+import Persona.EmploymentHistory.EmploymentHistory;
 import Persona.StudentDirectory;
 import Persona.StudentProfile;
 import java.awt.CardLayout;
@@ -21,12 +22,14 @@ public class StudentsJPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentsDirectoryJPanel
      */
+    int row;
     StudentDirectory studentDirectory;
     JPanel workarea;
     public StudentsJPanel(StudentDirectory studentDirectory,JPanel workarea) {
         this.studentDirectory=studentDirectory;
         this.workarea=workarea;
         initComponents();
+        refreshTable();
     }
 
     /**
@@ -164,41 +167,53 @@ public class StudentsJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStudentActionPerformed
-        String studentId=txtSearch.getText();
-        studentDirectory.findStudent(studentId);
-        //click search and have one row selected which has the student id selected
-    }//GEN-LAST:event_btnSearchStudentActionPerformed
-
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        
-//        int row = studentCatalog.getSelectedRow();
-//        if(row<0){
-//            JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        StudentProfile sp = (StudentProfile)studentCatalog.getValueAt(row,0);
-        AcademicJPanel aj = new AcademicJPanel(studentDirectory,workarea);
-        workarea.add("ViewAcademicPerformance", aj);
-        CardLayout layout = (CardLayout) workarea.getLayout();
+    private void btnView2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView2ActionPerformed
+        // TODO add your handling code here:
+        TotalPerformanceJPanel totalPerformanceJPanel=new TotalPerformanceJPanel(studentDirectory,workarea);
+        workarea.add("StudentsJPanel",totalPerformanceJPanel);
+        CardLayout layout = (CardLayout)workarea.getLayout();
         layout.next(workarea);
-    }//GEN-LAST:event_btnViewActionPerformed
+    }//GEN-LAST:event_btnView2ActionPerformed
 
     private void btnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView1ActionPerformed
         // TODO add your handling code here:
-        JobJPanel jobJPanel=new JobJPanel(studentDirectory,workarea);
+        row = studentCatalog.getSelectedRow();
+        if(row<0){
+                JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+        }
+        EmploymentHistory employmentHistory=new EmploymentHistory();
+        JobJPanel jobJPanel=new JobJPanel(employmentHistory,workarea);
         workarea.add("StudentsJPanel",jobJPanel);
         CardLayout layout = (CardLayout)workarea.getLayout();
         layout.next(workarea);
     }//GEN-LAST:event_btnView1ActionPerformed
 
-    private void btnView2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView2ActionPerformed
-        // TODO add your handling code here:
-        ViewJPanel jobJPanel=new ViewJPanel(studentDirectory,workarea);
-        workarea.add("StudentsJPanel",jobJPanel);
-        CardLayout layout = (CardLayout)workarea.getLayout();
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+
+        row = studentCatalog.getSelectedRow();
+        if(row<0){
+                JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        StudentProfile sp = (StudentProfile)studentCatalog.getValueAt(row,0);
+        AcademicJPanel aj = new AcademicJPanel(sp,workarea);
+        workarea.add("ViewAcademicPerformance", aj);
+        CardLayout layout = (CardLayout) workarea.getLayout();
         layout.next(workarea);
-    }//GEN-LAST:event_btnView2ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStudentActionPerformed
+        String studentId=txtSearch.getText();
+        for(int rowNum=0;rowNum<studentCatalog.getRowCount();rowNum++){
+            if(studentId.equals(studentCatalog.getValueAt(rowNum,0))){
+                studentCatalog.setRowSelectionInterval(rowNum, rowNum+1);
+                break;
+            }
+        }
+        
+        //click search and have one row selected which has the student id selected
+    }//GEN-LAST:event_btnSearchStudentActionPerformed
 
     public void refreshTable() {
         int rowCount = studentCatalog.getRowCount();

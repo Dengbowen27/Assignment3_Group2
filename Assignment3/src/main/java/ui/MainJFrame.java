@@ -5,10 +5,27 @@
  */
 package ui;
 
+import CourseCatalog.Course;
+import CourseSchedule.CourseLoad;
+import CourseSchedule.CourseOffer;
+import CourseSchedule.CourseSchedule;
+import CourseSchedule.SeatAssignment;
 import Department.Department;
+import Employer.EmployerDirectory;
+import Employer.EmployerProfile;
+import Faker.FakerUtl;
+import Persona.EmploymentHistory.Employment;
+import Persona.EmploymentHistory.EmploymentHistory;
+import Persona.Person;
+import Persona.PersonDirectory;
 import Persona.StudentDirectory;
+import Persona.StudentProfile;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.Collections;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -20,10 +37,11 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    Department department=new Department("InformationSystems");
+    Department department;
     StudentDirectory studentDirectory;
     CardLayout card;
-    public MainJFrame() {
+    public MainJFrame() throws InterruptedException {
+        department=generateData();
         studentDirectory=department.getStudentDirectory();
         initComponents();
     }
@@ -139,7 +157,11 @@ public class MainJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainJFrame().setVisible(true);
+                try {
+                    new MainJFrame().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -151,4 +173,149 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel workarea;
     // End of variables declaration//GEN-END:variables
+
+    private Department generateData() throws InterruptedException{
+        Scanner sc = new Scanner(System.in);
+        
+        Department department = new Department("Information Systems");
+        
+//        //Create semesters
+        String[] sems = new String[]{"Fall2019","Spring2020","Fall2020","Spring2021"};
+        
+        //16 courses
+        String[][] courses = {{"INFO-5001","INFO-5100","INFO-6105","INFO-6210","INFO-6250","INFO-7110","INFO-7250",
+                                "CSYE-5001","CSYE-5100","CSYE-6105","CSYE-6210","CSYE-6250","CSYE-7110","CSYE-7250","INFO-7245","INFO-7374"},
+                                 {"AMD","AED","DS PYTHON","DS MEHOD","WEB DESGIN","PROGRAM STRUCTURE","DATA MANAGEMENT",
+                                  "OOD","OOD C++","OS","SCALA","Foundations of Parallel","User Experience Design ","Advanced Game Analytics","Agile Software","Advanced User Experience"}   }; 
+        for (int j = 0; j < courses[0].length; j++) {
+                Course course = department.newCourse(courses[1][j], courses[0][j], 4);
+        }
+        //generate courseoffer by semester
+        for (int i = 0; i < sems.length; i++) {
+           CourseSchedule courseschedule = department.newCourseSchedule(sems[i]);
+            for (int j = 0; j < courses[0].length; j++) {
+               CourseOffer courseoffer = courseschedule.newCourseOffer(courses[0][j]);
+               courseoffer.generatSeats(100);
+            }
+            System.out.println(courseschedule.toString());
+        }
+
+        System.out.println("generate 100 students.. Enter");
+        String str;
+         while((str = sc.nextLine()) !="")
+          {
+             break;
+          }
+       // generate 100 students
+        PersonDirectory pd = department.getPersonDirectory();
+        StudentDirectory sd = department.getStudentDirectory();
+        for (int i = 0; i < 10; i++) {
+             Person person = pd.newPerson("00"+(15800+i),FakerUtl.name());
+            StudentProfile student = sd.newStudentProfile(person);
+            System.out.println(student);
+        }
+        
+        //generate transcript for each student
+        //every semester add 2 course offer
+        //给所有学生添加课程和成绩
+        for (StudentProfile stu : sd.getStudentlist()) {
+            int courseIdx = 0;
+            for (int i = 0; i < sems.length; i++) {
+                CourseLoad courseload = stu.newCourseLoad(sems[i]); //给学生添加一个学期
+                CourseSchedule courseschedule = department.getCourseSchedule(sems[i]); //获取部门内的某个学期课程数据
+                //随机添加一门课，但不能添加重复的课程
+
+                for (int j = 0; j < 2; j++) {
+                    int cdx = FakerUtl.randomIntNum(1, 2);
+                    if(courseIdx + cdx>15)
+                    {
+                       cdx = 1;
+                    }
+                    CourseOffer courseoffer = courseschedule.getCourseOfferByNumber(courses[0][courseIdx + cdx]); //获取该学期内的某节课
+                    courseIdx += cdx;
+                    SeatAssignment sa = courseload.newSeatAssignment(courseoffer); //给该学生添加这门课
+                    sa.setGrade(FakerUtl.randomDoubleNum(2, 3, 4)); //给这门课分数
+                }
+            }
+//            System.out.println(stu.getCurrentGpa());
+        }
+        
+         System.out.println("create companies and create employment for students.. Enter");
+         while((str = sc.nextLine()) !="")
+          {
+             break;
+          }
+        
+        //create companies
+        EmployerDirectory employerDirectory=department.getEmployerDirectory();
+        for (int i = 0; i < 3; i++) { //create n companies
+            EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(1, 10), FakerUtl.randomIntNum(1, 10
+            ));  //name , weight, quality
+            System.out.println(emp);
+            for (int j = 0; j < 3; j++) { //create n jobs for each company
+                Employment e = new Employment(FakerUtl.job(),FakerUtl.randomIntNum(1, 10),FakerUtl.randomIntNum(1, 10),emp);
+                //string job,int weight,int quality,EmployerProfile employer
+        //creat relevant courses
+                for(int k = 0;k<2;k++){
+                    int cdx = FakerUtl.randomIntNum(0, 15);
+                    Course c = department.getCourseCatalog().getCourseByNumber(courses[0][cdx]);
+                    e.newRelevantCourse(c);}
+                //e.newRelevantCourse(department.getCourseCatalog().getCourseByNumber("INFO-5100"));
+                
+               // for(Course c : e.getRelevantcourses()){
+               //     System.out.println(c.getName());
+               // }
+
+                System.out.println(e.getJob());
+                System.out.println(e.getEmployerName());
+       
+            }
+            
+        }
+        
+        //create employment for students
+        for (StudentProfile stu : sd.getStudentlist()) {
+            EmploymentHistory employmenthistory = stu.getEmploymenthistory();
+            EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
+            int randomIntNum = FakerUtl.randomIntNum(0,3);
+            for (int i = 0; i < randomIntNum; i++) {//随机插入0-3份工作
+                employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
+            }
+            //for(Employment e : employmenthistory.getEmployments()){
+          //  System.out.println(e.getJob());
+            
+           // }
+            System.out.println(stu.getPerson().getId());  
+            System.out.println(employmenthistory.getEmploymentGrade());
+            for(Employment e : employmenthistory.getEmployments()){
+                System.out.println(e.getJob());
+            }
+        }
+                
+        System.out.println("student sorts by rank.. Enter");
+         while((str = sc.nextLine()) !="")
+          {
+             break;
+          }
+         
+         Collections.sort(sd.getStudentlist());
+         int index = 1;
+         for (StudentProfile stu : sd.getStudentlist()) {
+             System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
+         }
+         
+ //relevant course numbers
+        for(StudentProfile stu : sd.getStudentlist()){
+            int num = 0;
+            for(CourseLoad c:stu.getTranscript().getCourseloadlist().values())
+                for(SeatAssignment sa:c.getSeatAssignments())
+                    for(Employment e : stu.getEmploymenthistory().getEmployments())
+                       for(Course f :e.getRelevantcourses())
+                           if(f==sa.getCourse()){
+                           num = num+1;
+                           }
+            System.out.println(num);
+        }
+        return department;
+    }
 }

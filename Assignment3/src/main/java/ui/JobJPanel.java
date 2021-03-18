@@ -5,9 +5,13 @@
  */
 package ui;
 
+import Persona.EmploymentHistory.Employment;
+import Persona.EmploymentHistory.EmploymentHistory;
 import Persona.StudentDirectory;
+import Persona.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,12 +22,13 @@ public class JobJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewJPanel
      */
-    StudentDirectory studentDirectory;
+    EmploymentHistory employmentHistory;
     JPanel workarea;
-    public JobJPanel(StudentDirectory studentDirectory,JPanel workarea) {
-        this.studentDirectory=studentDirectory;
+    public JobJPanel(EmploymentHistory employmentHistory,JPanel workarea) {
+        this.employmentHistory=employmentHistory;
         this.workarea=workarea;
         initComponents();
+        refreshTable();
     }
 
     /**
@@ -54,7 +59,7 @@ public class JobJPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "EmploymentID", "TimeLine", "Score", "etc..."
+                "EmploymentID", "Employer", "Job", "Score"
             }
         ));
         jScrollPane1.setViewportView(JobTable);
@@ -79,31 +84,31 @@ public class JobJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGap(204, 204, 204)
+                        .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(117, 117, 117)
-                        .addComponent(btnBack1))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBack1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -115,7 +120,7 @@ public class JobJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -125,7 +130,22 @@ public class JobJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) workarea.getLayout();
         layout.previous(workarea);
     }//GEN-LAST:event_btnBack1ActionPerformed
-
+    public void refreshTable() {
+        int rowCount = JobTable.getRowCount();
+        DefaultTableModel model = (DefaultTableModel) JobTable.getModel();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        int count=0;
+        for (Employment employment : employmentHistory.getEmployments()) {
+            Object row[] = new Object[4];
+            row[0] = ++count;
+            row[1] = employment.getEmployerName();
+            row[3] =employment.getJob();
+            row[4] =employment.getEmploymentGrade();
+            model.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JobTable;

@@ -47,5 +47,9 @@ public class CourseLoad {
     public ArrayList<SeatAssignment> getSeatAssignments(){
         return seatassignments;
     }
+
+    public void setSeatassignments(ArrayList<SeatAssignment> seatassignments) {
+        this.seatassignments = seatassignments;
+    }
     
 }
