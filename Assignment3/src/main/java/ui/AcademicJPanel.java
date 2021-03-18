@@ -6,6 +6,7 @@
 package ui;
 
 import Persona.StudentDirectory;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
@@ -117,6 +118,9 @@ public class AcademicJPanel extends javax.swing.JPanel {
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
         // TODO add your handling code here:
+        workarea.remove(this);
+        CardLayout layout = (CardLayout) workarea.getLayout();
+        layout.previous(workarea);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
 
