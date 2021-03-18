@@ -28,6 +28,9 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import jchart.LineChart_AWT;
+import jchart.PieChart_AWT;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -165,7 +168,16 @@ public class Info5100 {
              System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
          }
          
- //relevant course numbers
+//relevant course number
+            int onecourse = 0;
+            int twocourse = 0;
+            int threecourse = 0;
+            int fourcourse = 0;
+            int fivecourse = 0;
+            int sixcourse = 0;
+            int sevencourse = 0;
+            int eightcourse =0;
+            int ninecourse = 0;
         for(StudentProfile stu : sd.getStudentlist()){
             int num = 0;
             for(CourseLoad c:stu.getTranscript().getCourseloadlist().values())
@@ -176,13 +188,73 @@ public class Info5100 {
                            num = num+1;
                            }
             System.out.println(num);
+            if(num==1){
+                onecourse++;
+            }if(num==2){
+                twocourse++;
+            }if(num==3){
+                threecourse++;
+            }if(num==4){
+                fourcourse++;
+            }if(num==5){
+                fivecourse++;
+            }if(num==6){
+                sixcourse++;
+            }if(num==7){
+                sevencourse++;
+            }if(num==8){
+                eightcourse++;
+            }if(num==9){
+                ninecourse++;
+            }
         }
 
 //promotion
-        //for(StudentProfile stu : sd.getStudentlist()){
-        //    for(Employment e : stu.getEmploymenthistory().getEmployments())
+       for(StudentProfile stu : sd.getStudentlist()){
+          boolean a;
+          for(Employment e1 : stu.getEmploymenthistory().getEmployments())
+          for(Employment e2 : stu.getEmploymenthistory().getEmployments())
+              if(e2.getEmploymentGrade()>e1.getEmploymentGrade()) {
+               a = true;
+       }else a = false;
+       }
+//pieChart
+      HashMap<String,Integer> maps =  new HashMap<>();
+      maps.put("one course",onecourse);
+      maps.put("two courses",twocourse);
+      maps.put("three courses",threecourse);
+      maps.put("four courses",fourcourse);
+      maps.put("five courses",fivecourse);
+      maps.put("six courses",sixcourse);
+      maps.put("seven courses",sevencourse);
+      maps.put("eight courses",eightcourse);
+      maps.put("nine courses",ninecourse);
+
+      PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );  
+      demo.setSize( 560 , 367 );    
+      RefineryUtilities.centerFrameOnScreen( demo );    
+      demo.setVisible( true ); 
+
+//LineChart
+ ArrayList<Float> gpas = new ArrayList<>();
+        for(StudentProfile stu:sd.getStudentlist()){
+            int i = sd.getStudentlist().size();
+            for(int j=0;j<i;j++){
+                float gpa = stu.getCurrentGpa();
+                gpas.add(gpa);
+            }
+        }
+      gpas.add(4.0f);
+      LineChart_AWT chart = new LineChart_AWT(
+      "Gpa Vs Rank" ,
+      "Gpas vs Ranks",
+        gpas,
+      "gpa");
+
+      chart.pack( );
+      RefineryUtilities.centerFrameOnScreen( chart );
+      chart.setVisible( true );
                 
-        //}
          
          
 

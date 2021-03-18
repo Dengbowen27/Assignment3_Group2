@@ -44,16 +44,18 @@ public class EmploymentHistory {
         return sum/i;
     }
     
-    public boolean isPromotion(){
-       // for (Employment e:employments) {
-             int i = employments.size()-1;
-             int grade[]=new int[i];
-             String em[]=new String[i];
-             for(int j=0;j<i;j++){
-                grade[j]=employments.get(j).getEmploymentGrade();
-                em[j]=employments.get(j).getEmployerName();
-             }            
-            return true; 
+   public boolean isPromotion(){
+        boolean a = true;
+        for (Employment e1:employments) 
+        for (Employment e2:employments){
+            if(e2.getEmploymentGrade()>e1.getEmploymentGrade()){
+                a=true;
+            }else
+                a=false;
+        }
+        return a;
+        
+          
     }
     
 }
