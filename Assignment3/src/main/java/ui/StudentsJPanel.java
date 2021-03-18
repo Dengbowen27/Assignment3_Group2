@@ -22,7 +22,6 @@ public class StudentsJPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentsDirectoryJPanel
      */
-    int row;
     StudentDirectory studentDirectory;
     JPanel workarea;
     public StudentsJPanel(StudentDirectory studentDirectory,JPanel workarea) {
@@ -85,21 +84,21 @@ public class StudentsJPanel extends javax.swing.JPanel {
         btnView.setText("View Academic Performance");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewActionPerformed(evt);
+                btnAcademicActionPerformed(evt);
             }
         });
 
         btnView1.setText("View Job Perforamnce");
         btnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnView1ActionPerformed(evt);
+                btnJobPerformancePerformed(evt);
             }
         });
 
         btnView2.setText("View Total Perforamnce");
         btnView2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnView2ActionPerformed(evt);
+                btnTotalPerformanceActionPerformed(evt);
             }
         });
 
@@ -167,31 +166,32 @@ public class StudentsJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnView2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView2ActionPerformed
+    private void btnTotalPerformanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalPerformanceActionPerformed
         // TODO add your handling code here:
         TotalPerformanceJPanel totalPerformanceJPanel=new TotalPerformanceJPanel(studentDirectory,workarea);
         workarea.add("StudentsJPanel",totalPerformanceJPanel);
         CardLayout layout = (CardLayout)workarea.getLayout();
         layout.next(workarea);
-    }//GEN-LAST:event_btnView2ActionPerformed
+    }//GEN-LAST:event_btnTotalPerformanceActionPerformed
 
-    private void btnView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnView1ActionPerformed
+    private void btnJobPerformancePerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJobPerformancePerformed
         // TODO add your handling code here:
-        row = studentCatalog.getSelectedRow();
+        int row = studentCatalog.getSelectedRow();
         if(row<0){
                 JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
         }
-        EmploymentHistory employmentHistory=new EmploymentHistory();
+        StudentProfile sp = (StudentProfile)studentCatalog.getValueAt(row,0);
+        EmploymentHistory employmentHistory=sp.getEmploymenthistory();
         JobJPanel jobJPanel=new JobJPanel(employmentHistory,workarea);
-        workarea.add("StudentsJPanel",jobJPanel);
+        workarea.add("JobJPanel",jobJPanel);
         CardLayout layout = (CardLayout)workarea.getLayout();
         layout.next(workarea);
-    }//GEN-LAST:event_btnView1ActionPerformed
+    }//GEN-LAST:event_btnJobPerformancePerformed
 
-    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+    private void btnAcademicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcademicActionPerformed
 
-        row = studentCatalog.getSelectedRow();
+        int row = studentCatalog.getSelectedRow();
         if(row<0){
                 JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -201,7 +201,7 @@ public class StudentsJPanel extends javax.swing.JPanel {
         workarea.add("ViewAcademicPerformance", aj);
         CardLayout layout = (CardLayout) workarea.getLayout();
         layout.next(workarea);
-    }//GEN-LAST:event_btnViewActionPerformed
+    }//GEN-LAST:event_btnAcademicActionPerformed
 
     private void btnSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStudentActionPerformed
         String studentId=txtSearch.getText();

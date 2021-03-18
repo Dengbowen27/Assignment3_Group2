@@ -8,6 +8,7 @@ package ui;
 import Persona.StudentDirectory;
 import Persona.StudentProfile;
 import java.awt.CardLayout;
+import java.text.DecimalFormat;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -108,6 +109,7 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
 
     public void refreshTable() {
         int rowCount = JobTable.getRowCount();
+        DecimalFormat df = new DecimalFormat("0.00");
         DefaultTableModel model = (DefaultTableModel) JobTable.getModel();
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
@@ -116,10 +118,12 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
             Object row[] = new Object[5];
             row[0] = sp;
             row[1] = sp.getEmploymenthistory().getEmploymentGrade();
-            row[3] =sp.getCurrentGpa();
+            row[3] = df.format(sp.getCurrentGpa());;
             row[4] =sp;
             model.addRow(row);
         }
+           
+      
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JobTable;

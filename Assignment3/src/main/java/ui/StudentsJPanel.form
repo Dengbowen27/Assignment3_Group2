@@ -139,7 +139,7 @@
             <Property name="text" type="java.lang.String" value="View Academic Performance"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAcademicActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnView1">
@@ -147,7 +147,7 @@
             <Property name="text" type="java.lang.String" value="View Job Perforamnce"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnView1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnJobPerformancePerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnView2">
@@ -155,7 +155,7 @@
             <Property name="text" type="java.lang.String" value="View Total Perforamnce"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnView2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTotalPerformanceActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -141,8 +141,8 @@ public class JobJPanel extends javax.swing.JPanel {
             Object row[] = new Object[4];
             row[0] = ++count;
             row[1] = employment.getEmployerName();
-            row[3] =employment.getJob();
-            row[4] =employment.getEmploymentGrade();
+            row[2] =employment.getJob();
+            row[3] =employment.getEmploymentGrade();
             model.addRow(row);
         }
     }
