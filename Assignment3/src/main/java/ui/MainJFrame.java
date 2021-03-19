@@ -67,6 +67,7 @@ public class MainJFrame extends javax.swing.JFrame {
         contrlarea = new javax.swing.JPanel();
         btnStudentsProfile = new javax.swing.JButton();
         Analysis = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         workarea = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -102,15 +103,18 @@ public class MainJFrame extends javax.swing.JFrame {
             contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contrlareaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnStudentsProfile)
-                    .addComponent(Analysis))
+                .addGroup(contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnStudentsProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Analysis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contrlareaLayout.setVerticalGroup(
             contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contrlareaLayout.createSequentialGroup()
-                .addGap(122, 122, 122)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnStudentsProfile)
                 .addGap(52, 52, 52)
                 .addComponent(Analysis)
@@ -148,6 +152,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
         // TODO add your handling code here:
+        
         Analysis(repC,studentDirectory);
     }//GEN-LAST:event_AnalysisActionPerformed
 
@@ -195,6 +200,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane SplitPane;
     private javax.swing.JButton btnStudentsProfile;
     private javax.swing.JPanel contrlarea;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel workarea;
     // End of variables declaration//GEN-END:variables
@@ -364,8 +370,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 maps.put(i + " course", repC[i]);
         }
         
-        PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );
+        PieChart_AWT demo = new PieChart_AWT( "Ratio Of Relative Courses Of Rank Top 100 Students",maps );
         demo.setSize( 560 , 367 );
+//        demo.pack();
         RefineryUtilities.centerFrameOnScreen( demo );
         demo.setVisible( true );
         
@@ -381,8 +388,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 "Gpas vs Ranks",
                 gpas,
                 "gpa");
-
-        chart.pack();
+        chart.setSize(560,367);
+//        chart.pack();
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
     }

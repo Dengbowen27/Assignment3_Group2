@@ -95,6 +95,11 @@ public class Employment implements Comparable<Employment>{
          }
          return 0;
     }
+
+    @Override
+    public String toString() {
+        return employer.getName();
+    }
     
     
 }

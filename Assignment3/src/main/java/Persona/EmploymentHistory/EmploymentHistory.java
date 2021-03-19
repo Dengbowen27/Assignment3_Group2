@@ -48,19 +48,13 @@ public class EmploymentHistory {
     }
     
    public boolean isPromotion(){
-        boolean a = true;
-        Employment max = Collections.max(employments);
-        //Employment min = Collections.min(employments);
-        if(max.getEmploymentGrade()!=0){
-            if(max.getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
-                a = true;
-            }else
-                a = false;
-        }else a =false;
-        
-        return a;
-        
-          
+        int size=employments.size();
+        if(size==0||size==1)
+            return false;
+        if(employments.get(size-1).getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
+            return true;
+        }
+        return false;
     }
    
    //get relevant courses without repeat
