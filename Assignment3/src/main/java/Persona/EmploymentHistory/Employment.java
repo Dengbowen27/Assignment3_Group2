@@ -14,7 +14,7 @@ import Employer.EmployerProfile;
  *
  * @author Dengbowen
  */
-public class Employment {
+public class Employment implements Comparable<Employment>{
 
     ArrayList<Course> relevantcourses;
     
@@ -85,6 +85,15 @@ public class Employment {
     }
     public int getEmploymentGrade(){
        return weight*quality;
+    }
+
+    @Override
+    public int compareTo(Employment o) {
+         int level = o.getEmploymentGrade()-this.getEmploymentGrade();
+         if(level!=0){
+             return level;
+         }
+         return 0;
     }
     
     

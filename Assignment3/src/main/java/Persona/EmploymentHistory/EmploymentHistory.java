@@ -9,6 +9,7 @@ import CourseCatalog.Course;
 import Employer.EmployerProfile;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 /**
@@ -48,13 +49,15 @@ public class EmploymentHistory {
     
    public boolean isPromotion(){
         boolean a = true;
-        for (Employment e1:employments) 
-        for (Employment e2:employments){
-            if(e2.getEmploymentGrade()>e1.getEmploymentGrade()){
-                a=true;
+        Employment max = Collections.max(employments);
+        //Employment min = Collections.min(employments);
+        if(max.getEmploymentGrade()!=0){
+            if(max.getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
+                a = true;
             }else
-                a=false;
-        }
+                a = false;
+        }else a =false;
+        
         return a;
         
           

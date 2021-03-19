@@ -73,7 +73,7 @@ public class Info5100 {
        // generate 100 students
         PersonDirectory pd = department.getPersonDirectory();
         StudentDirectory sd = department.getStudentDirectory();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
              Person person = pd.newPerson("00"+(15800+i),FakerUtl.name());
             StudentProfile student = sd.newStudentProfile(person);
 //            System.out.println(student);
@@ -136,7 +136,7 @@ public class Info5100 {
         for (StudentProfile stu : sd.getStudentlist()) {
             EmploymentHistory employmenthistory = stu.getEmploymenthistory();
             EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
-            int randomIntNum = FakerUtl.randomIntNum(0,3);
+            int randomIntNum = FakerUtl.randomIntNum(1,3);
             for (int i = 0; i < randomIntNum; i++) {//随机插入0-3份工作
                 employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
             }
@@ -178,17 +178,22 @@ public class Info5100 {
         }
 
 //promotion
-        for (StudentProfile stu : sd.getStudentlist()) {
-            boolean a;
-            for (Employment e1 : stu.getEmploymenthistory().getEmployments()) {
-                for (Employment e2 : stu.getEmploymenthistory().getEmployments()) {
-                    if (e2.getEmploymentGrade() > e1.getEmploymentGrade()) {
-                        a = true;
-                    } else {
-                        a = false;
-                    }
-                }
-            }
+        //for (StudentProfile stu : sd.getStudentlist()) {
+      //      boolean a;
+       //     for (Employment e1 : stu.getEmploymenthistory().getEmployments()) {
+       //         for (Employment e2 : stu.getEmploymenthistory().getEmployments()) {
+
+       //             if (e2.getEmploymentGrade() > e1.getEmploymentGrade()) {
+       //                 a = true;
+      //              } else {
+       //                 a = false;
+       //             }
+                
+       //         }
+       //     }
+       // }
+       for(StudentProfile stu : sd.getStudentlist()){
+            System.out.println(Collections.max(stu.getEmploymenthistory().getEmployments()).getEmploymentGrade());
         }
 //pieChart
         HashMap<String, Integer> maps = new HashMap<>();
