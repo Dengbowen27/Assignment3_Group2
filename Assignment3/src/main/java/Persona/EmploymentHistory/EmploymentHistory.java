@@ -23,8 +23,9 @@ public class EmploymentHistory {
         employments = new ArrayList();
     }
     
-    public void newEmployment(Employment e){
+    public Employment newEmployment(Employment e){
         employments.add(e);
+        return e;
     }
 
     public ArrayList<Employment> getEmployments() {
