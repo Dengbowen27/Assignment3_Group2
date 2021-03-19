@@ -10,6 +10,7 @@ import Persona.EmploymentHistory.EmploymentHistory;
 import Persona.StudentDirectory;
 import Persona.StudentProfile;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,7 +52,9 @@ public class JobJPanel extends javax.swing.JPanel {
         txtTotalScore = new javax.swing.JTextField();
         btnBack1 = new javax.swing.JButton();
         txtStudentID = new javax.swing.JTextField();
+        btnViewRelativeCourses = new javax.swing.JButton();
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Student Job Performence");
 
         JobTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -94,6 +97,13 @@ public class JobJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnViewRelativeCourses.setText("View Relative Courses");
+        btnViewRelativeCourses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewRelativeCoursesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,25 +112,24 @@ public class JobJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtname)
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnViewRelativeCourses)
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(txtTotalScore, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtname, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack1))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,8 +146,9 @@ public class JobJPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtTotalScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(126, Short.MAX_VALUE))
+                    .addComponent(txtTotalScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnViewRelativeCourses))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -156,6 +166,20 @@ public class JobJPanel extends javax.swing.JPanel {
     private void txtStudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStudentIDActionPerformed
+
+    private void btnViewRelativeCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewRelativeCoursesActionPerformed
+        // TODO add your handling code here:
+                int row = JobTable.getSelectedRow();
+        if(row<0){
+                JOptionPane.showMessageDialog(null, "Please select a row!!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+        }
+        Employment employment = (Employment)JobTable.getValueAt(row,1);
+        RelativeCoursesJPanel jobJPanel=new RelativeCoursesJPanel(employment,workarea);
+        workarea.add("JobJPanel",jobJPanel);
+        CardLayout layout = (CardLayout)workarea.getLayout();
+        layout.next(workarea);
+    }//GEN-LAST:event_btnViewRelativeCoursesActionPerformed
     public void refreshTable() {
         int rowCount = JobTable.getRowCount();
         DefaultTableModel model = (DefaultTableModel) JobTable.getModel();
@@ -166,7 +190,7 @@ public class JobJPanel extends javax.swing.JPanel {
         for (Employment employment : employmentHistory.getEmployments()) {
             Object row[] = new Object[4];
             row[0] = ++count;
-            row[1] = employment.getEmployerName();
+            row[1] = employment;
             row[2] =employment.getJob();
             row[3] =employment.getEmploymentGrade();
             model.addRow(row);
@@ -179,6 +203,7 @@ public class JobJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JobTable;
     private javax.swing.JButton btnBack1;
+    private javax.swing.JButton btnViewRelativeCourses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

@@ -75,6 +75,7 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(JobTable);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Student Total Performence");
 
         btnSearchProduct.setText("Search Student");
@@ -91,7 +92,7 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(260, 260, 260)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                 .addComponent(btnBack1))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()

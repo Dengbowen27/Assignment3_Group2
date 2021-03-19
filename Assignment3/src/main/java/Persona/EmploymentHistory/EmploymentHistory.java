@@ -23,9 +23,8 @@ public class EmploymentHistory {
         employments = new ArrayList();
     }
     
-    public Employment newEmployment(Employment e){
+    public void newEmployment(Employment e){
         employments.add(e);
-        return e;
     }
 
     public ArrayList<Employment> getEmployments() {
@@ -38,7 +37,7 @@ public class EmploymentHistory {
         int i = 0;
         for(Employment e:employments){
             EmployerProfile employer = e.getEmployer();
-            sum += employer.getQuality()*employer.getWeight()+ e.getEmploymentGrade();
+            sum =sum + employer.getQuality()*employer.getWeight()+e.getQuality()*e.getWeight();
             i++;
         }
         if(i==0)
@@ -49,19 +48,13 @@ public class EmploymentHistory {
     }
     
    public boolean isPromotion(){
-        boolean a = true;
-        Employment max = Collections.max(employments);
-        //Employment min = Collections.min(employments);
-        if(max.getEmploymentGrade()!=0){
-            if(max.getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
-                a = true;
-            }else
-                a = false;
-        }else a =false;
-        
-        return a;
-        
-          
+        int size=employments.size();
+        if(size==0||size==1)
+            return false;
+        if(employments.get(size-1).getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
+            return true;
+        }
+        return false;
     }
    
    //get relevant courses without repeat
