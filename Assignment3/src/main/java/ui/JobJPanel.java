@@ -24,9 +24,11 @@ public class JobJPanel extends javax.swing.JPanel {
      */
     EmploymentHistory employmentHistory;
     JPanel workarea;
-    public JobJPanel(EmploymentHistory employmentHistory,JPanel workarea) {
-        this.employmentHistory=employmentHistory;
+    StudentProfile studentProfile;
+    public JobJPanel(StudentProfile studentProfile,JPanel workarea) {
+        this.studentProfile=studentProfile;
         this.workarea=workarea;
+        this.employmentHistory=studentProfile.getEmploymenthistory();
         initComponents();
         refreshTable();
     }
@@ -45,9 +47,10 @@ public class JobJPanel extends javax.swing.JPanel {
         JobTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtname = new javax.swing.JTextField();
+        txtTotalScore = new javax.swing.JTextField();
         btnBack1 = new javax.swing.JButton();
+        txtStudentID = new javax.swing.JTextField();
 
         jLabel1.setText("Student Job Performence");
 
@@ -68,14 +71,26 @@ public class JobJPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Total Score");
 
-        jTextField1.setEditable(false);
+        txtname.setEditable(false);
+        txtname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnameActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setEditable(false);
+        txtTotalScore.setEditable(false);
 
         btnBack1.setText("<< Back");
         btnBack1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBack1ActionPerformed(evt);
+            }
+        });
+
+        txtStudentID.setEditable(false);
+        txtStudentID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStudentIDActionPerformed(evt);
             }
         });
 
@@ -90,15 +105,17 @@ public class JobJPanel extends javax.swing.JPanel {
                         .addGap(204, 204, 204)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTotalScore, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtname, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addGap(43, 43, 43)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnBack1))
@@ -112,14 +129,15 @@ public class JobJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack1))
+                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBack1)
+                    .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTotalScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -130,6 +148,14 @@ public class JobJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) workarea.getLayout();
         layout.previous(workarea);
     }//GEN-LAST:event_btnBack1ActionPerformed
+
+    private void txtnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnameActionPerformed
+
+    private void txtStudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStudentIDActionPerformed
     public void refreshTable() {
         int rowCount = JobTable.getRowCount();
         DefaultTableModel model = (DefaultTableModel) JobTable.getModel();
@@ -145,6 +171,9 @@ public class JobJPanel extends javax.swing.JPanel {
             row[3] =employment.getEmploymentGrade();
             model.addRow(row);
         }
+        txtStudentID.setText(studentProfile.getPerson().getId());
+        txtname.setText(studentProfile.getPerson().getName());
+        txtTotalScore.setText(""+employmentHistory.getEmploymentGrade());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -154,7 +183,8 @@ public class JobJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtStudentID;
+    private javax.swing.JTextField txtTotalScore;
+    private javax.swing.JTextField txtname;
     // End of variables declaration//GEN-END:variables
 }

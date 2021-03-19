@@ -42,6 +42,8 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         JobTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        btnSearchProduct = new javax.swing.JButton();
 
         btnBack1.setText("<< Back");
         btnBack1.addActionListener(new java.awt.event.ActionListener() {
@@ -52,17 +54,17 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
 
         JobTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "StudentID", "EmploymentGrade", "EmploymentRank", "GPA", "RelevantCourseQuantity"
+                "EmploymentRank", "StudentID", "EmploymentGrade", "GPA", "RelevantCourseQuantity", "IsPromoted"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -72,6 +74,13 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(JobTable);
 
         jLabel1.setText("Student Total Performence");
+
+        btnSearchProduct.setText("Search Student");
+        btnSearchProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchProductbtnSearchStudentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -84,8 +93,16 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
                 .addComponent(btnBack1))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearchProduct)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +113,11 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
                     .addComponent(btnBack1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,6 +128,18 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         layout.previous(workarea);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
+    private void btnSearchProductbtnSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductbtnSearchStudentActionPerformed
+        String studentId=txtSearch.getText();
+        for(int rowNum=0;rowNum<JobTable.getRowCount();rowNum++){
+            if(studentId.equals(JobTable.getValueAt(rowNum,1).toString())){
+                JobTable.setRowSelectionInterval(rowNum, rowNum);
+                break;
+            }
+        }
+
+        //click search and have one row selected which has the student id selected
+    }//GEN-LAST:event_btnSearchProductbtnSearchStudentActionPerformed
+
     public void refreshTable() {
         int rowCount = JobTable.getRowCount();
         DecimalFormat df = new DecimalFormat("0.00");
@@ -114,12 +147,15 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
+        int count=0;
         for (StudentProfile sp : studentDirectory.getStudentlist()) {
-            Object row[] = new Object[5];
-            row[0] = sp;
-            row[1] = sp.getEmploymenthistory().getEmploymentGrade();
+            Object row[] = new Object[6];
+            row[0] = ++count;
+            row[1] = sp;
+            row[2] = sp.getEmploymenthistory().getEmploymentGrade();
             row[3] = df.format(sp.getCurrentGpa());;
-            row[4] =sp;
+            row[4] =sp.getEmploymenthistory().getRelevantCourses().size();
+            row[5] = sp.getEmploymenthistory().isPromotion();
             model.addRow(row);
         }
            
@@ -128,7 +164,9 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JobTable;
     private javax.swing.JButton btnBack1;
+    private javax.swing.JButton btnSearchProduct;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

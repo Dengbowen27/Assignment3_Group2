@@ -182,8 +182,7 @@ public class StudentsJPanel extends javax.swing.JPanel {
                 return;
         }
         StudentProfile sp = (StudentProfile)studentCatalog.getValueAt(row,0);
-        EmploymentHistory employmentHistory=sp.getEmploymenthistory();
-        JobJPanel jobJPanel=new JobJPanel(employmentHistory,workarea);
+        JobJPanel jobJPanel=new JobJPanel(sp,workarea);
         workarea.add("JobJPanel",jobJPanel);
         CardLayout layout = (CardLayout)workarea.getLayout();
         layout.next(workarea);
@@ -206,8 +205,8 @@ public class StudentsJPanel extends javax.swing.JPanel {
     private void btnSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchStudentActionPerformed
         String studentId=txtSearch.getText();
         for(int rowNum=0;rowNum<studentCatalog.getRowCount();rowNum++){
-            if(studentId.equals(studentCatalog.getValueAt(rowNum,0))){
-                studentCatalog.setRowSelectionInterval(rowNum, rowNum+1);
+            if(studentId.equals(studentCatalog.getValueAt(rowNum,0).toString())){
+                studentCatalog.setRowSelectionInterval(rowNum, rowNum);
                 break;
             }
         }

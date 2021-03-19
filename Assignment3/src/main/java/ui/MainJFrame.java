@@ -22,11 +22,16 @@ import Persona.StudentDirectory;
 import Persona.StudentProfile;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import jchart.LineChart_AWT;
+import jchart.PieChart_AWT;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -40,10 +45,12 @@ public class MainJFrame extends javax.swing.JFrame {
     Department department;
     StudentDirectory studentDirectory;
     CardLayout card;
+    int[] repC;
     public MainJFrame() throws InterruptedException {
         department=generateData();
-        studentDirectory=department.getStudentDirectory();
+        studentDirectory=department.getStudentDirectory();       
         initComponents();
+        
     }
 
     /**
@@ -59,6 +66,7 @@ public class MainJFrame extends javax.swing.JFrame {
         SplitPane = new javax.swing.JSplitPane();
         contrlarea = new javax.swing.JPanel();
         btnStudentsProfile = new javax.swing.JButton();
+        Analysis = new javax.swing.JButton();
         workarea = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -81,13 +89,22 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        Analysis.setText("Analysis");
+        Analysis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnalysisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout contrlareaLayout = new javax.swing.GroupLayout(contrlarea);
         contrlarea.setLayout(contrlareaLayout);
         contrlareaLayout.setHorizontalGroup(
             contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contrlareaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnStudentsProfile)
+                .addGroup(contrlareaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnStudentsProfile)
+                    .addComponent(Analysis))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contrlareaLayout.setVerticalGroup(
@@ -95,7 +112,9 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(contrlareaLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(btnStudentsProfile)
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(Analysis)
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         SplitPane.setLeftComponent(contrlarea);
@@ -126,6 +145,11 @@ public class MainJFrame extends javax.swing.JFrame {
         layout.next(workarea);
         
     }//GEN-LAST:event_btnStudentsProfileActionPerformed
+
+    private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
+        // TODO add your handling code here:
+        Analysis(repC,studentDirectory);
+    }//GEN-LAST:event_AnalysisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,6 +191,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Analysis;
     private javax.swing.JSplitPane SplitPane;
     private javax.swing.JButton btnStudentsProfile;
     private javax.swing.JPanel contrlarea;
@@ -175,7 +200,7 @@ public class MainJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private Department generateData() throws InterruptedException{
-        Scanner sc = new Scanner(System.in);
+         Scanner sc = new Scanner(System.in);
         
         Department department = new Department("Information Systems");
         
@@ -209,12 +234,12 @@ public class MainJFrame extends javax.swing.JFrame {
        // generate 100 students
         PersonDirectory pd = department.getPersonDirectory();
         StudentDirectory sd = department.getStudentDirectory();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
              Person person = pd.newPerson("00"+(15800+i),FakerUtl.name());
             StudentProfile student = sd.newStudentProfile(person);
-            System.out.println(student);
+//            System.out.println(student);
         }
-        
+        System.out.println("Done!");
         //generate transcript for each student
         //every semester add 2 course offer
         //给所有学生添加课程和成绩
@@ -237,9 +262,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     sa.setGrade(FakerUtl.randomDoubleNum(2, 3, 4)); //给这门课分数
                 }
             }
+            System.out.println(stu.getPerson().getName()+" trans 课程：");
+            for(Course c:stu.getTranscript().getCourses()){
+                System.out.println(c);
+            }
 //            System.out.println(stu.getCurrentGpa());
         }
-        
+        System.out.println("Done!");
          System.out.println("create companies and create employment for students.. Enter");
          while((str = sc.nextLine()) !="")
           {
@@ -248,27 +277,18 @@ public class MainJFrame extends javax.swing.JFrame {
         
         //create companies
         EmployerDirectory employerDirectory=department.getEmployerDirectory();
-        for (int i = 0; i < 3; i++) { //create n companies
+        for (int i = 0; i < 100; i++) { //create n companies
             EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(1, 10), FakerUtl.randomIntNum(1, 10
             ));  //name , weight, quality
-            System.out.println(emp);
-            for (int j = 0; j < 3; j++) { //create n jobs for each company
+//            System.out.println(emp);
+            for (int j = 0; j < 10; j++) { //create n jobs for each company
                 Employment e = new Employment(FakerUtl.job(),FakerUtl.randomIntNum(1, 10),FakerUtl.randomIntNum(1, 10),emp);
                 //string job,int weight,int quality,EmployerProfile employer
         //creat relevant courses
-                for(int k = 0;k<2;k++){
+                for(int k = 0;k<5;k++){ // 随机添加相关课程
                     int cdx = FakerUtl.randomIntNum(0, 15);
                     Course c = department.getCourseCatalog().getCourseByNumber(courses[0][cdx]);
                     e.newRelevantCourse(c);}
-                //e.newRelevantCourse(department.getCourseCatalog().getCourseByNumber("INFO-5100"));
-                
-               // for(Course c : e.getRelevantcourses()){
-               //     System.out.println(c.getName());
-               // }
-
-                System.out.println(e.getJob());
-                System.out.println(e.getEmployerName());
-       
             }
             
         }
@@ -277,19 +297,23 @@ public class MainJFrame extends javax.swing.JFrame {
         for (StudentProfile stu : sd.getStudentlist()) {
             EmploymentHistory employmenthistory = stu.getEmploymenthistory();
             EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
-            int randomIntNum = FakerUtl.randomIntNum(0,3);
-            for (int i = 0; i < randomIntNum; i++) {//随机插入0-3份工作
+            int randomIntNum = FakerUtl.randomIntNum(0,5);
+            for (int i = 0; i < randomIntNum; i++) {//随机插入0-5份工作
                 employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
             }
             //for(Employment e : employmenthistory.getEmployments()){
           //  System.out.println(e.getJob());
             
            // }
-            System.out.println(stu.getPerson().getId());  
-            System.out.println(employmenthistory.getEmploymentGrade());
-            for(Employment e : employmenthistory.getEmployments()){
-                System.out.println(e.getJob());
+            System.out.println(stu.getPerson().getName());  
+            System.out.println("相关课程：");
+            for(Course c:stu.getEmploymenthistory().getRelevantCourses()){
+                System.out.println(c);
             }
+//            System.out.println(employmenthistory.getEmploymentGrade());
+//            for(Employment e : employmenthistory.getEmployments()){
+//                System.out.println(e.getJob());
+//            }
         }
                 
         System.out.println("student sorts by rank.. Enter");
@@ -304,18 +328,62 @@ public class MainJFrame extends javax.swing.JFrame {
              System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
          }
          
- //relevant course numbers
-        for(StudentProfile stu : sd.getStudentlist()){
-            int num = 0;
-            for(CourseLoad c:stu.getTranscript().getCourseloadlist().values())
-                for(SeatAssignment sa:c.getSeatAssignments())
-                    for(Employment e : stu.getEmploymenthistory().getEmployments())
-                       for(Course f :e.getRelevantcourses())
-                           if(f==sa.getCourse()){
-                           num = num+1;
-                           }
-            System.out.println(num);
+//relevant course number
+        repC = new int[9]; //代表相关课程和个人选课的重复数目为0-8
+        for (StudentProfile stu : sd.getStudentlist()) {
+            
+            ArrayList<Course> tcs = stu.getTranscript().getCourses();
+            int num = stu.getEmploymenthistory().getSameCoursesNum(tcs);
+            repC[num]+=1;
+            System.out.println("重复课程数量="+num);
         }
+
+//promotion
+        for (StudentProfile stu : sd.getStudentlist()) {
+            boolean a;
+            for (Employment e1 : stu.getEmploymenthistory().getEmployments()) {
+                for (Employment e2 : stu.getEmploymenthistory().getEmployments()) {
+                    if (e2.getEmploymentGrade() > e1.getEmploymentGrade()) {
+                        a = true;
+                    } 
+                    else if((e2.getEmploymentGrade() <= e1.getEmploymentGrade())||(e2.getEmploymentGrade()==0&&e1.getEmploymentGrade()==0)){
+                        a = false;
+                    }
+                }
+            }
+        }
+//        Analysis(repC, sd);
         return department;
+    }
+    
+    private void Analysis(int[] repC, StudentDirectory sd) {
+        //pieChart
+        HashMap<String, Integer> maps = new HashMap<>();
+        for (int i = 0; i < repC.length; i++) {
+            if(repC[i]!=0)
+                maps.put(i + " course", repC[i]);
+        }
+        
+        PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );
+        demo.setSize( 560 , 367 );
+        RefineryUtilities.centerFrameOnScreen( demo );
+        demo.setVisible( true );
+        
+        //LineChart
+        ArrayList<Float> gpas = new ArrayList<>();
+        for (StudentProfile stu : sd.getStudentlist()) {
+            float gpa = stu.getCurrentGpa();
+            gpas.add(gpa);
+        }
+        //      gpas.add(4.0f);
+        LineChart_AWT chart = new LineChart_AWT(
+                "Gpa Vs Rank",
+                "Gpas vs Ranks",
+                gpas,
+                "gpa");
+
+        chart.pack();
+        RefineryUtilities.centerFrameOnScreen(chart);
+        chart.setVisible(true);
     }
 }
