@@ -240,16 +240,69 @@ public class MainJFrame extends javax.swing.JFrame {
 //            System.out.println(student);
         }
         System.out.println("Done!");
+        System.out.println("create companies and create employment for students.. Enter");
+         while((str = sc.nextLine()) !="")
+          {
+             break;
+          }
+        
+        //create companies
+        EmployerDirectory employerDirectory=department.getEmployerDirectory();
+        for (int i = 0; i < 20; i++) { //create n companies
+            EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(2,3), FakerUtl.randomIntNum(4, 5));  //name , weight, quality 把公司的权重比列降低
+//            System.out.println(emp);
+            for (int j = 0; j < 10; j++) { //create n jobs for each company
+                Employment e = new Employment(FakerUtl.job(),FakerUtl.randomIntNum(3, 13),FakerUtl.randomIntNum(3, 13),emp);  //0-169
+//                //string job,int weight,int quality,EmployerProfile employer
+//        //creat relevant courses
+                //改成如果分数高的话，相关课程会多一些, 每10分就有一节相关课程
+                int index = e.getEmploymentGrade()/10; 
+                if(index>16) index = 15;
+                for (int k = 0; k < index; k++) { // 随机添加相关课程 
+                    Course c = department.getCourseCatalog().getCourseByNumber(courses[0][k]);
+                    e.newRelevantCourse(c);
+                }
+            }
+           
+        }
+
+        
+        //create employment for students
+        for (StudentProfile stu : sd.getStudentlist()) {
+            EmploymentHistory employmenthistory = stu.getEmploymenthistory();
+            EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
+            int randomIntNum = FakerUtl.randomIntNum(1,5);
+            for (int i = 0; i < randomIntNum; i++) {//随机插入1-5份工作
+                Employment e =  employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
+                System.out.println(e.getEmployerName()+"分数:"+e.getEmploymentGrade());
+            }
+        }
+        
+        System.out.println("student sorts by rank.. Enter");
+        while((str = sc.nextLine()) !="")
+         {
+            break;
+         }
+
+        Collections.sort(sd.getStudentlist());
+        
         //generate transcript for each student
         //every semester add 2 course offer
         //给所有学生添加课程和成绩
-        for (StudentProfile stu : sd.getStudentlist()) {
+        //*****排在前面的人给他的分数都高一些*******
+        double weight  = sd.getStudentlist().size();
+        for (int k = 0; k < sd.getStudentlist().size(); k++) {
+            StudentProfile stu = sd.getStudentlist().get(k);
             int courseIdx = 0;
+            /*---------------------****-------------*/
+            
+            
             for (int i = 0; i < sems.length; i++) {
                 CourseLoad courseload = stu.newCourseLoad(sems[i]); //给学生添加一个学期
                 CourseSchedule courseschedule = department.getCourseSchedule(sems[i]); //获取部门内的某个学期课程数据
                 //随机添加一门课，但不能添加重复的课程
-
+                double bound = (weight-k)/weight;
+                int b = (int) (bound*100);
                 for (int j = 0; j < 2; j++) {
                     int cdx = FakerUtl.randomIntNum(1, 2);
                     if(courseIdx + cdx>15)
@@ -259,74 +312,29 @@ public class MainJFrame extends javax.swing.JFrame {
                     CourseOffer courseoffer = courseschedule.getCourseOfferByNumber(courses[0][courseIdx + cdx]); //获取该学期内的某节课
                     courseIdx += cdx;
                     SeatAssignment sa = courseload.newSeatAssignment(courseoffer); //给该学生添加这门课
-                    sa.setGrade(FakerUtl.randomDoubleNum(2, 3, 4)); //给这门课分数
+                    int biggrade = FakerUtl.randomIntNum(200+b,300+b);
+                    System.out.println("分数=="+biggrade/100.0);
+                    sa.setGrade(biggrade/100.0); //给这门课分数
+                
                 }
             }
-            System.out.println(stu.getPerson().getName()+" trans 课程：");
-            for(Course c:stu.getTranscript().getCourses()){
-                System.out.println(c);
-            }
-//            System.out.println(stu.getCurrentGpa());
-        }
-        System.out.println("Done!");
-         System.out.println("create companies and create employment for students.. Enter");
-         while((str = sc.nextLine()) !="")
-          {
-             break;
-          }
-        
-        //create companies
-        EmployerDirectory employerDirectory=department.getEmployerDirectory();
-        for (int i = 0; i < 100; i++) { //create n companies
-            EmployerProfile emp = employerDirectory.newEmployerProfile(FakerUtl.company(),FakerUtl.randomIntNum(1, 10), FakerUtl.randomIntNum(1, 10
-            ));  //name , weight, quality
-//            System.out.println(emp);
-            for (int j = 0; j < 10; j++) { //create n jobs for each company
-                Employment e = new Employment(FakerUtl.job(),FakerUtl.randomIntNum(1, 10),FakerUtl.randomIntNum(1, 10),emp);
-                //string job,int weight,int quality,EmployerProfile employer
-        //creat relevant courses
-                for(int k = 0;k<5;k++){ // 随机添加相关课程
-                    int cdx = FakerUtl.randomIntNum(0, 15);
-                    Course c = department.getCourseCatalog().getCourseByNumber(courses[0][cdx]);
-                    e.newRelevantCourse(c);}
-            }
-            
-        }
-        
-        //create employment for students
-        for (StudentProfile stu : sd.getStudentlist()) {
-            EmploymentHistory employmenthistory = stu.getEmploymenthistory();
-            EmployerProfile oneEmployerProfile = employerDirectory.getOneEmployerProfile(); //随机拿一个公司
-            int randomIntNum = FakerUtl.randomIntNum(0,5);
-            for (int i = 0; i < randomIntNum; i++) {//随机插入0-5份工作
-                employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
-            }
-            //for(Employment e : employmenthistory.getEmployments()){
-          //  System.out.println(e.getJob());
-            
-           // }
-            System.out.println(stu.getPerson().getName());  
-            System.out.println("相关课程：");
-            for(Course c:stu.getEmploymenthistory().getRelevantCourses()){
-                System.out.println(c);
-            }
-//            System.out.println(employmenthistory.getEmploymentGrade());
-//            for(Employment e : employmenthistory.getEmployments()){
-//                System.out.println(e.getJob());
+//            System.out.println(stu.getPerson().getName()+" trans 课程：");
+//            for(Course c:stu.getTranscript().getCourses()){
+//                System.out.println(c);
 //            }
+            
         }
+        
+        System.out.println("Done!");
+
+        
+
                 
-        System.out.println("student sorts by rank.. Enter");
-         while((str = sc.nextLine()) !="")
-          {
-             break;
-          }
-         
-         Collections.sort(sd.getStudentlist());
-         int index = 1;
-         for (StudentProfile stu : sd.getStudentlist()) {
-             System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
-         }
+
+//         int index = 1;
+//         for (StudentProfile stu : sd.getStudentlist()) {
+//             System.out.println(String.format("%d    rank:{%d}    %s", index++,stu.getEmploymenthistory().getEmploymentGrade(),stu.getPerson()));
+//         }
          
 //relevant course number
         repC = new int[9]; //代表相关课程和个人选课的重复数目为0-8
@@ -335,7 +343,7 @@ public class MainJFrame extends javax.swing.JFrame {
             ArrayList<Course> tcs = stu.getTranscript().getCourses();
             int num = stu.getEmploymenthistory().getSameCoursesNum(tcs);
             repC[num]+=1;
-            System.out.println("重复课程数量="+num);
+            System.out.println("工作关联课程数量="+stu.getEmploymenthistory().getRelevantCourses().size()+ " ,重复课程数量="+num);
         }
 
 //promotion

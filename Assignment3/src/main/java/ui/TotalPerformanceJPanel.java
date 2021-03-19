@@ -5,10 +5,12 @@
  */
 package ui;
 
+import CourseCatalog.Course;
 import Persona.StudentDirectory;
 import Persona.StudentProfile;
 import java.awt.CardLayout;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -149,12 +151,16 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         }
         int count=0;
         for (StudentProfile sp : studentDirectory.getStudentlist()) {
+            //重复相关课程
+             ArrayList<Course> tcs = sp.getTranscript().getCourses();
+            int same_num = sp.getEmploymenthistory().getSameCoursesNum(tcs);
+            //end
             Object row[] = new Object[6];
             row[0] = ++count;
             row[1] = sp;
             row[2] = sp.getEmploymenthistory().getEmploymentGrade();
             row[3] = df.format(sp.getCurrentGpa());;
-            row[4] =sp.getEmploymenthistory().getRelevantCourses().size();
+            row[4] = same_num;
             row[5] = sp.getEmploymenthistory().isPromotion();
             model.addRow(row);
         }

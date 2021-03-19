@@ -23,8 +23,9 @@ public class EmploymentHistory {
         employments = new ArrayList();
     }
     
-    public void newEmployment(Employment e){
+    public Employment newEmployment(Employment e){
         employments.add(e);
+        return e;
     }
 
     public ArrayList<Employment> getEmployments() {
@@ -37,7 +38,7 @@ public class EmploymentHistory {
         int i = 0;
         for(Employment e:employments){
             EmployerProfile employer = e.getEmployer();
-            sum =sum + employer.getQuality()*employer.getWeight()+e.getQuality()*e.getWeight();
+            sum += employer.getQuality()*employer.getWeight()+ e.getEmploymentGrade();
             i++;
         }
         if(i==0)

@@ -6,6 +6,7 @@
 package Faker;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Job;
 import java.util.Locale;
 
 /**
@@ -21,6 +22,10 @@ public class FakerUtl {
     private static Faker faker = new Faker(new Locale(FakerUtl.LANGUAGE));
     
     public static double randomDoubleNum(int decimal,int min, int max) {
+        return faker.number().randomDouble(decimal, min, max);
+    }
+    
+    public static double randomDoubleNumL(int decimal,long min, long max) {
         return faker.number().randomDouble(decimal, min, max);
     }
 
@@ -66,8 +71,12 @@ public class FakerUtl {
         return faker.company().name();
     }
      
-      public static String job() {
+    public static String job() {
         return faker.job().title();
+    }
+    
+    public static Job jobInfo(){
+         return faker.job();
     }
 
 }
