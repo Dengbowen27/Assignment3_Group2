@@ -370,7 +370,7 @@ public class MainJFrame extends javax.swing.JFrame {
             //System.out.println("工作关联课程数量="+stu.getEmploymenthistory().getRelevantCourses().size()+ " ,重复课程数量="+num);
         }
 
-//promotion
+//promotion 
         for (StudentProfile stu : sd.getStudentlist()) {
             boolean a;
             for (Employment e1 : stu.getEmploymenthistory().getEmployments()) {
