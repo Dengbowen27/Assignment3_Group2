@@ -6,6 +6,7 @@
 package CourseSchedule;
 
 import CourseCatalog.Course;
+import Persona.Faculty.FacultyProfile;
 
 /**
  *
@@ -14,6 +15,7 @@ import CourseCatalog.Course;
 public class SeatAssignment {
     Seat seat;
     CourseLoad courseload;
+    FacultyProfile facultyProfile;
     double grade;
 
     public Seat getSeat() {
@@ -51,5 +53,9 @@ public class SeatAssignment {
     }
     public Course getCourse(){
         return seat.getCourse();
+    }
+    
+    public FacultyProfile getFaculty(){
+        return seat.getCourseoffer().getFacultyProfile();
     }
 }

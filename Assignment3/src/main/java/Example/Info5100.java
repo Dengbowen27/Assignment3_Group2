@@ -202,10 +202,10 @@ public class Info5100 {
                 maps.put(i + " course", repC[i]);
         }
 
-      PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );  
-      demo.setSize( 560 , 367 );    
-      RefineryUtilities.centerFrameOnScreen( demo );    
-      demo.setVisible( true ); 
+//      PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );  
+//      demo.setSize( 560 , 367 );    
+//      RefineryUtilities.centerFrameOnScreen( demo );    
+//      demo.setVisible( true ); 
 
 //LineChart
         ArrayList<Float> gpas = new ArrayList<>();

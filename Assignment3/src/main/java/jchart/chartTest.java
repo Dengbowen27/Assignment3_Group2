@@ -22,8 +22,9 @@ public class chartTest {
       maps.put("4门",15);
       maps.put("5门",20);
       maps.put("6门",25);
-      PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps );  
-      demo.setSize( 560 , 367 );    
+      PieChart_AWT demo = new PieChart_AWT( "rank前100 选中相关课程数目的人数",maps,maps );  
+      demo.pack();
+      demo.setSize( 1160 , 500 );    
       RefineryUtilities.centerFrameOnScreen( demo );    
       demo.setVisible( true ); 
       

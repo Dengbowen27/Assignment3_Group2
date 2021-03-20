@@ -53,13 +53,13 @@ public class AcademicJPanel extends javax.swing.JPanel {
 
         AcademicTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "CourseID", "CreditHour", "Score", "Price"
+                "CourseID", "CreditHour", "Score", "Price", "Instructor"
             }
         ));
         jScrollPane1.setViewportView(AcademicTable);
@@ -98,7 +98,7 @@ public class AcademicJPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtStudentName, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(txtStudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addGap(105, 105, 105)
@@ -147,12 +147,13 @@ public class AcademicJPanel extends javax.swing.JPanel {
             model.removeRow(i);
         }
         for(CourseLoad courseLoad:currentStudent.getTranscript().getCourseloadlist().values()){
-            Object row[] = new Object[4];
+            Object row[] = new Object[5];
             for(SeatAssignment seatAssignment:courseLoad.getSeatAssignments()){
                 row[0]=seatAssignment.getCourse().getNumber();
                 row[1]=seatAssignment.getCreditHours();
                 row[2]=seatAssignment.getGrade();
                 row[3]=seatAssignment.getCourse().getCoursePrice();
+                row[4]=seatAssignment.getFaculty().getPerson().getName();
                 model.addRow(row);
             }
         }

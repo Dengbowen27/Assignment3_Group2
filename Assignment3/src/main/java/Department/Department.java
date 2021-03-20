@@ -41,6 +41,7 @@ public class Department {
         coursecatalog = new CourseCatalog(this);
         studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
         persondirectory = new PersonDirectory();
+        facultydirectory = new FacultyDirectory(this);
         employerDirectory=new EmployerDirectory(this);
     }
 
@@ -48,6 +49,10 @@ public class Department {
 
         return persondirectory;
 
+    }
+
+    public FacultyDirectory getFacultydirectory() {
+        return facultydirectory;
     }
 
     public StudentDirectory getStudentDirectory() {

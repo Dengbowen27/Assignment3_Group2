@@ -16,6 +16,7 @@ import Employer.EmployerProfile;
 import Faker.FakerUtl;
 import Persona.EmploymentHistory.Employment;
 import Persona.EmploymentHistory.EmploymentHistory;
+import Persona.Faculty.FacultyDirectory;
 import Persona.Person;
 import Persona.PersonDirectory;
 import Persona.StudentDirectory;
@@ -45,7 +46,8 @@ public class MainJFrame extends javax.swing.JFrame {
     Department department;
     StudentDirectory studentDirectory;
     CardLayout card;
-    int[] repC;
+    int[] repC1;
+    int[] repC2;
     public MainJFrame() throws InterruptedException {
         department=generateData();
         studentDirectory=department.getStudentDirectory();       
@@ -153,7 +155,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
         // TODO add your handling code here:
         
-        Analysis(repC,studentDirectory);
+        Analysis(studentDirectory);
     }//GEN-LAST:event_AnalysisActionPerformed
 
     /**
@@ -221,12 +223,23 @@ public class MainJFrame extends javax.swing.JFrame {
         for (int j = 0; j < courses[0].length; j++) {
                 Course course = department.newCourse(courses[1][j], courses[0][j], 4);
         }
+        //generate teacher
+        PersonDirectory pd = department.getPersonDirectory();
+        FacultyDirectory fd = department.getFacultydirectory();
+        for (int i = 0; i < 12; i++) {
+             Person person = pd.newPerson(""+(99503750+i),FakerUtl.name());
+             fd.newStudentProfile(person);
+        }
         //generate courseoffer by semester
         for (int i = 0; i < sems.length; i++) {
            CourseSchedule courseschedule = department.newCourseSchedule(sems[i]);
+           int faculIdx = 0;
             for (int j = 0; j < courses[0].length; j++) {
                CourseOffer courseoffer = courseschedule.newCourseOffer(courses[0][j]);
                courseoffer.generatSeats(100);
+               if(faculIdx>=fd.getTeacherlist().size()) faculIdx = 0;
+               courseoffer.AssignAsTeacher(fd.getTeacherlist().get(faculIdx));
+               faculIdx+=1;
             }
             System.out.println(courseschedule.toString());
         }
@@ -238,7 +251,7 @@ public class MainJFrame extends javax.swing.JFrame {
              break;
           }
        // generate 100 students
-        PersonDirectory pd = department.getPersonDirectory();
+       
         StudentDirectory sd = department.getStudentDirectory();
         for (int i = 0; i < 100; i++) {
              Person person = pd.newPerson("00"+(15800+i),FakerUtl.name());
@@ -280,7 +293,7 @@ public class MainJFrame extends javax.swing.JFrame {
             int randomIntNum = FakerUtl.randomIntNum(1,5);
             for (int i = 0; i < randomIntNum; i++) {//随机插入1-5份工作
                 Employment e =  employmenthistory.newEmployment(oneEmployerProfile.getEmployments().get(i));
-                System.out.println(e.getEmployerName()+"分数:"+e.getEmploymentGrade());
+//                System.out.println(e.getEmployerName()+"分数:"+e.getEmploymentGrade());
             }
         }
         
@@ -319,7 +332,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     courseIdx += cdx;
                     SeatAssignment sa = courseload.newSeatAssignment(courseoffer); //给该学生添加这门课
                     int biggrade = FakerUtl.randomIntNum(200+b,300+b);
-                    System.out.println("分数=="+biggrade/100.0);
+//                    System.out.println("分数=="+biggrade/100.0);
                     sa.setGrade(biggrade/100.0); //给这门课分数
                 
                 }
@@ -343,13 +356,18 @@ public class MainJFrame extends javax.swing.JFrame {
 //         }
          
 //relevant course number
-        repC = new int[9]; //代表相关课程和个人选课的重复数目为0-8
-        for (StudentProfile stu : sd.getStudentlist()) {
-            
+        repC1 = new int[9]; //代表相关课程和个人选课的重复数目为0-8
+        repC2 = new int[9];
+        int stl = sd.getStudentlist().size();
+        for (int i = 0; i < sd.getStudentlist().size(); i++) {
+            StudentProfile stu =  sd.getStudentlist().get(i);
             ArrayList<Course> tcs = stu.getTranscript().getCourses();
             int num = stu.getEmploymenthistory().getSameCoursesNum(tcs);
-            repC[num]+=1;
-            System.out.println("工作关联课程数量="+stu.getEmploymenthistory().getRelevantCourses().size()+ " ,重复课程数量="+num);
+            if(i<stl/2)
+                repC1[num]+=1;
+            else
+                repC2[num]+=1;
+            //System.out.println("工作关联课程数量="+stu.getEmploymenthistory().getRelevantCourses().size()+ " ,重复课程数量="+num);
         }
 
 //promotion
@@ -370,19 +388,30 @@ public class MainJFrame extends javax.swing.JFrame {
         return department;
     }
     
-    private void Analysis(int[] repC, StudentDirectory sd) {
+    private void Analysis(StudentDirectory sd) {
         //pieChart
-        HashMap<String, Integer> maps = new HashMap<>();
-        for (int i = 0; i < repC.length; i++) {
-            if(repC[i]!=0)
-                maps.put(i + " course", repC[i]);
+        HashMap<String, Integer> maps1 = new HashMap<>();
+        HashMap<String, Integer> maps2 = new HashMap<>();
+        for (int i = 0; i < repC1.length; i++) {
+            if(repC1[i]!=0)
+                    maps1.put(i + " course", repC1[i]);    
+        }
+        for (int i = 0; i < repC2.length; i++) {
+            if(repC2[i]!=0)
+                    maps2.put(i + " course", repC2[i]);    
         }
         
-        PieChart_AWT demo = new PieChart_AWT( "Ratio Of Relative Courses Of Rank Top 100 Students",maps );
-        demo.setSize( 560 , 367 );
-//        demo.pack();
-        RefineryUtilities.centerFrameOnScreen( demo );
-        demo.setVisible( true );
+//        PieChart_AWT demo = new PieChart_AWT( "Ratio Of Relative Courses Of Rank Top 100 Students",maps );
+//        demo.setSize( 560 , 367 );
+////        demo.pack();
+//        RefineryUtilities.centerFrameOnScreen( demo );
+//        demo.setVisible( true );
+
+      PieChart_AWT demo = new PieChart_AWT( "Ratio Of Relative Courses VS Ranks",maps1,maps2 );  
+      demo.pack();
+      demo.setSize( 1160 , 400 );    
+      RefineryUtilities.centerFrameOnScreen( demo );    
+      demo.setVisible( true );
         
         //LineChart
         ArrayList<Float> gpas = new ArrayList<>();
