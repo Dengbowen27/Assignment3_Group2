@@ -393,12 +393,17 @@ public class MainJFrame extends javax.swing.JFrame {
         HashMap<String, Integer> maps1 = new HashMap<>();
         HashMap<String, Integer> maps2 = new HashMap<>();
         for (int i = 0; i < repC1.length; i++) {
-            if(repC1[i]!=0)
+            if(repC1[i]!=0){
+                 System.out.println(i + " course:"+repC1[i]);
                     maps1.put(i + " course", repC1[i]);    
+            }
         }
+        System.out.println("-------------");
         for (int i = 0; i < repC2.length; i++) {
-            if(repC2[i]!=0)
-                    maps2.put(i + " course", repC2[i]);    
+            if(repC2[i]!=0){
+                System.out.println(i + " course:"+repC2[i]);
+                    maps2.put(i + " course", repC2[i]);  
+            }
         }
         
 //        PieChart_AWT demo = new PieChart_AWT( "Ratio Of Relative Courses Of Rank Top 100 Students",maps );
@@ -412,6 +417,39 @@ public class MainJFrame extends javax.swing.JFrame {
       demo.setSize( 1160 , 400 );    
       RefineryUtilities.centerFrameOnScreen( demo );    
       demo.setVisible( true );
+      
+      //promotion ratio
+      int[] r3 = new int[2];
+      int[] r4 = new int[2];
+      int lengh =  sd.getStudentlist().size();
+        for (int i = 0; i < lengh; i++) {
+            StudentProfile stu = sd.getStudentlist().get(i);
+            if (stu.getEmploymenthistory().isPromotion()) {
+                if (i < lengh / 2) {
+                    r3[1] += 1;
+                } else {
+                    r4[1] += 1;
+                }
+            } else {
+                if (i < lengh / 2) {
+                    r3[0] += 1;
+                } else {
+                    r4[0] += 1;
+                }
+
+            }
+        }
+        HashMap<String, Integer> maps3 = new HashMap<>();
+        HashMap<String, Integer> maps4 = new HashMap<>();
+        maps3.put("True", r3[1]);
+        maps3.put("False", r3[0]);
+        maps4.put("True", r4[1]);
+        maps4.put("False", r4[0]);
+      PieChart_AWT demo2 = new PieChart_AWT( "Ratio Of Promotion VS Ranks",maps3,maps4 );  
+      demo2.pack();
+      demo2.setSize( 1160 , 400 );    
+      RefineryUtilities.centerFrameOnScreen( demo2 );    
+      demo2.setVisible( true );
         
         //LineChart
         ArrayList<Float> gpas = new ArrayList<>();

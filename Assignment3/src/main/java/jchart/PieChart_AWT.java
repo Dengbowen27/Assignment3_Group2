@@ -54,9 +54,10 @@ public class PieChart_AWT extends ApplicationFrame
        for (Entry<String, Integer> entry : mapdata1.entrySet()) {
             entry.getKey();
             entry.getValue(); 
+//            System.out.println(entry.getKey()+"("+entry.getValue()+"/"+(total*100)+"%"+")");
             dataset.addValue( entry.getValue(), entry.getKey()+"("+(Math.round(entry.getValue()/total*100))+"%"+")", "Top 50 percentage");
        }
-       
+//       System.out.println("---------");
        total = 0.0f;
        for(Integer value:mapdata2.values()){
            total+=value;
@@ -65,6 +66,7 @@ public class PieChart_AWT extends ApplicationFrame
        for (Entry<String, Integer> entry : mapdata2.entrySet()) {
             entry.getKey();
             entry.getValue(); 
+//            System.out.println(entry.getKey()+"("+entry.getValue()+"/"+(total*100)+"%"+")");
             dataset.addValue( entry.getValue(), entry.getKey()+"("+(Math.round(entry.getValue()/total*100))+"%"+")", "Last 50 percentage");
        }
       return dataset;         
@@ -88,7 +90,7 @@ public class PieChart_AWT extends ApplicationFrame
         final MultiplePiePlot plot = (MultiplePiePlot) chart.getPlot();
         final JFreeChart subchart = plot.getPieChart();
 
-        plot.setLimit(0.10);
+        plot.setLimit(0.0010);
         final PiePlot p = (PiePlot) subchart.getPlot();
         p.setLabelFont(new Font("SansSerif", Font.PLAIN, 16));
 //        p.setInteriorGap(0.30);

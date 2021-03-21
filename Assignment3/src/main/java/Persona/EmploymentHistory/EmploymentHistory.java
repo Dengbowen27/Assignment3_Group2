@@ -49,13 +49,22 @@ public class EmploymentHistory {
     }
     
    public boolean isPromotion(){
+        Collections.sort(employments);
         int size=employments.size();
         if(size==0||size==1)
             return false;
-        if(employments.get(size-1).getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
+        
+        //fake 分数比较大才能算晋升
+//        System.out.println("isPromoton= "+(employments.get(size-1).getEmploymentGrade()-employments.get(0).getEmploymentGrade()));
+        if(employments.get(size-1).getEmploymentGrade()-employments.get(0).getEmploymentGrade()<-50)
+        {
             return true;
         }
         return false;
+//        if(employments.get(size-1).getEmploymentGrade()>employments.get(0).getEmploymentGrade()){
+//            return true;
+//        }
+//        return false;
     }
    
    //get relevant courses without repeat
