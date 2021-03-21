@@ -144,7 +144,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnView1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="View Job Perforamnce"/>
+            <Property name="text" type="java.lang.String" value="View Job Performance"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnJobPerformancePerformed"/>
@@ -152,7 +152,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnView2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="View Total Perforamnce"/>
+            <Property name="text" type="java.lang.String" value="View Total Performance"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTotalPerformanceActionPerformed"/>

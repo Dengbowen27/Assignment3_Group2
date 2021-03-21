@@ -76,7 +76,7 @@ public class TotalPerformanceJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(JobTable);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Student Total Performence");
+        jLabel1.setText("Student Total Performance");
 
         btnSearchProduct.setText("Search Student");
         btnSearchProduct.addActionListener(new java.awt.event.ActionListener() {

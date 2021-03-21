@@ -56,7 +56,7 @@ public class JobJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Student Job Performence");
+        jLabel1.setText("Student Job Performance");
 
         JobTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

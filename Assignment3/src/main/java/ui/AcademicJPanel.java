@@ -65,7 +65,7 @@ public class AcademicJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(AcademicTable);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Student Acedamic Performence");
+        jLabel1.setText("Student Academic Performance");
 
         jLabel2.setText("StudentID");
 
@@ -98,7 +98,7 @@ public class AcademicJPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtStudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
+                                .addComponent(txtStudentName, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addGap(105, 105, 105)

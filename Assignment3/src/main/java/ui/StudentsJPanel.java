@@ -88,14 +88,14 @@ public class StudentsJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnView1.setText("View Job Perforamnce");
+        btnView1.setText("View Job Performance");
         btnView1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJobPerformancePerformed(evt);
             }
         });
 
-        btnView2.setText("View Total Perforamnce");
+        btnView2.setText("View Total Performance");
         btnView2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTotalPerformanceActionPerformed(evt);

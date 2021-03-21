@@ -211,6 +211,7 @@ public class MainJFrame extends javax.swing.JFrame {
          Scanner sc = new Scanner(System.in);
         
         Department department = new Department("Information Systems");
+        System.out.println("Department:"+department.getName());
         
 //        //Create semesters
         String[] sems = new String[]{"Fall2019","Spring2020","Fall2020","Spring2021"};

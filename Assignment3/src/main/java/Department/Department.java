@@ -22,6 +22,8 @@ import Persona.Faculty.FacultyDirectory;
  * @author Dengbowen
  */
 public class Department {
+
+   
     String name;
     CourseCatalog coursecatalog;
     PersonDirectory persondirectory;
@@ -112,5 +114,8 @@ public class Department {
         CourseOffer co = cs.getCourseOfferByNumber(cn);
 
         co.assignEmptySeat(cl);
+    }
+     public String getName() {
+        return name;
     }
 }
